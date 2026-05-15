@@ -14,7 +14,6 @@ function AppContent() {
   const { user } = useAuth();
   const [view, setView] = useState('grade');
   const [concursos, setConcursos] = useState([]);
-  const [_sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -32,33 +31,13 @@ function AppContent() {
   };
 
   return (
-  style={{
-      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-      background: 'var(--bg2)', borderBottom: '1px solid var(--border)',
-      padding: '12px 16px', alignItems: 'center', gap: 12,
-      display: 'none'
-        <button onClick={() => setSidebarOpen(o => !o)} style={{ background: 'none', border: 'none', color: 'var(--text)', fontSize: 20, padding: 4 }}>
-          ☰
-        </button>
-        <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 16 }}>📚 Cronograma</span>
-      </div>
-
-      {/* Sidebar */}
-      <div style={{ display: 'flex' }} className="hide-mobile">
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <div className="hide-mobile">
         <Sidebar active={view} onChange={setView} />
       </div>
-
-      {/* Main content */}
       <main style={{ flex: 1, overflowY: 'auto', padding: '2rem', maxWidth: '100%' }}>
         {views[view]}
       </main>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .mobile-header { display: flex !important; }
-          main { padding: 5rem 1rem 1rem !important; }
-        }
-      `}</style>
     </div>
   );
 }
