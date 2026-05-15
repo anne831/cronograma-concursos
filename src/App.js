@@ -14,7 +14,7 @@ function AppContent() {
   const { user } = useAuth();
   const [view, setView] = useState('grade');
   const [concursos, setConcursos] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [_sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -32,14 +32,11 @@ function AppContent() {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      {/* Mobile header */}
-      <div style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        background: 'var(--bg2)', borderBottom: '1px solid var(--border)',
-        padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 12,
-        display: 'none'
-      }} className="mobile-header">
+  style={{
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+      background: 'var(--bg2)', borderBottom: '1px solid var(--border)',
+      padding: '12px 16px', alignItems: 'center', gap: 12,
+      display: 'none'
         <button onClick={() => setSidebarOpen(o => !o)} style={{ background: 'none', border: 'none', color: 'var(--text)', fontSize: 20, padding: 4 }}>
           ☰
         </button>

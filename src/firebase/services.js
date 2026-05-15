@@ -1,7 +1,5 @@
-import {
-  collection, addDoc, updateDoc, deleteDoc,
-  doc, getDocs, query, where, orderBy, onSnapshot, serverTimestamp
-} from 'firebase/firestore';
+import { collection, addDoc, updateDoc, deleteDoc, doc, query, where, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore';
+
 import { db } from './config';
 
 // ─── CONCURSOS ───────────────────────────────────────────────
