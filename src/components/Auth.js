@@ -42,7 +42,8 @@ export default function Auth() {
             background: 'var(--accent-soft)', border: '1px solid rgba(108,99,255,0.3)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 1rem', fontSize: 28
-          }}>📚</div>
+          fontSize: 24
+          }}>🎯📚</div>
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 800, color: 'var(--text)' }}>
             Cronograma<br />
             <span style={{ color: 'var(--accent2)' }}>de Concursos</span>
