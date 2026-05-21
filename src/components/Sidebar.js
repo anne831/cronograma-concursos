@@ -15,7 +15,6 @@ export default function Sidebar({ active, onChange }) {
 
   return (
     <>
-      {/* DESKTOP — menu lateral esquerdo */}
       <aside style={{
         width: 220, flexShrink: 0, background: 'var(--bg2)',
         borderRight: '0.5px solid var(--border)', height: '100vh',
@@ -27,7 +26,6 @@ export default function Sidebar({ active, onChange }) {
           </div>
           <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>Concursos Públicos</div>
         </div>
-
         <nav style={{ flex: 1, padding: '0.75rem 0.5rem', overflowY: 'auto' }}>
           {navItems.map(item => (
             <button key={item.id} onClick={() => onChange(item.id)} style={{
@@ -43,7 +41,6 @@ export default function Sidebar({ active, onChange }) {
             </button>
           ))}
         </nav>
-
         <div style={{ padding: '1rem', borderTop: '0.5px solid var(--border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
             <div style={{
@@ -72,7 +69,6 @@ export default function Sidebar({ active, onChange }) {
         </div>
       </aside>
 
-      {/* MOBILE — barra inferior */}
       <nav style={{
         position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 50,
         background: 'var(--bg2)', borderTop: '0.5px solid var(--border)',
@@ -82,14 +78,14 @@ export default function Sidebar({ active, onChange }) {
         {navItems.map(item => (
           <button key={item.id} onClick={() => onChange(item.id)} style={{
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
-            padding: '4px 12px', border: 'none', background: 'transparent',
+            padding: '4px 8px', border: 'none', background: 'transparent',
             color: active === item.id ? 'var(--accent2)' : 'var(--text3)',
             fontSize: 10, fontWeight: active === item.id ? 600 : 400,
             transition: 'var(--transition)', cursor: 'pointer'
           }}>
-            <span style={{ fontSize: 20 }}>{item.icon}</span>
+            <span style={{ fontSize: 18 }}>{item.icon}</span>
             {item.label.split(' ')[0]}
-            </button>
+          </button>
         ))}
       </nav>
     </>
