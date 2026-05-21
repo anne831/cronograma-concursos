@@ -6,13 +6,17 @@ import { ptBR } from 'date-fns/locale';
 
 const HORAS = ['06:00','07:00','08:00','09:00','10:00','11:00','14:00','15:00','16:00','19:00','20:00','21:00'];
 const MATERIAS = [
-  { value: 'dir_const', label: 'Dir. Constitucional', color: '#60a5fa', bg: 'rgba(96,165,250,0.15)' },
+  { value: 'port', label: 'Língua Portuguesa', color: '#60a5fa', bg: 'rgba(96,165,250,0.15)' },
+  { value: 'logica', label: 'Raciocínio Lógico', color: '#fbbf24', bg: 'rgba(251,191,36,0.15)' },
+  { value: 'deficiencia', label: 'Dir. Pessoas c/ Deficiência', color: '#34d399', bg: 'rgba(52,211,153,0.15)' },
+  { value: 'leg_estadual', label: 'Legislação Estadual', color: '#f472b6', bg: 'rgba(244,114,182,0.15)' },
+  { value: 'dir_const', label: 'Dir. Constitucional', color: '#a78bfa', bg: 'rgba(167,139,250,0.15)' },
   { value: 'dir_adm', label: 'Dir. Administrativo', color: '#22d3a0', bg: 'rgba(34,211,160,0.15)' },
-  { value: 'dir_civil', label: 'Dir. Civil', color: '#a78bfa', bg: 'rgba(167,139,250,0.15)' },
-  { value: 'dir_penal', label: 'Dir. Penal', color: '#f87171', bg: 'rgba(248,113,113,0.15)' },
-  { value: 'port_log', label: 'Português / Lógica', color: '#fbbf24', bg: 'rgba(251,191,36,0.15)' },
-  { value: 'proc_civil', label: 'Proc. Civil', color: '#f472b6', bg: 'rgba(244,114,182,0.15)' },
-  { value: 'revisao', label: 'Revisão', color: '#94a3b8', bg: 'rgba(148,163,184,0.15)' },
+  { value: 'dir_civil', label: 'Dir. Civil', color: '#f87171', bg: 'rgba(248,113,113,0.15)' },
+  { value: 'proc_civil', label: 'Proc. Civil', color: '#fb923c', bg: 'rgba(251,146,60,0.15)' },
+  { value: 'dir_penal', label: 'Dir. Penal', color: '#e879f9', bg: 'rgba(232,121,249,0.15)' },
+  { value: 'proc_penal', label: 'Proc. Penal', color: '#94a3b8', bg: 'rgba(148,163,184,0.15)' },
+  { value: 'revisao', label: 'Revisão', color: '#64748b', bg: 'rgba(100,116,139,0.15)' },
 ];
 const DIAS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
 
