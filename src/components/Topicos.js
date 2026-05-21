@@ -10,20 +10,15 @@ export default function Topicos({ concursos }) {
   const [filtro, setFiltro] = useState('all');
   const [form, setForm] = useState({ texto: '', concurso: '', materia: '' });
   const [saving, setSaving] = useState(false);
-  const [importing, setImporting] = useState(false);
+const [importing, setImporting] = useState(false);
 
-  useEffect(() => {
-    if (!user) return;
-    return getTopicos(user.uid, setTopicos);
-  }, [user]);
-
-  const importarTJCE = async () => {
-    setImporting(true);
-    for (const t of TOPICOS_TJCE) {
-      await addTopico(user.uid, t);
-    }
-    setImporting(false);
-  };
+const importarTJCE = async () => {
+  setImporting(true);
+  for (const t of TOPICOS_TJCE) {
+    await addTopico(user.uid, t);
+  }
+  setImporting(false);
+};
 
   const handleAdd = async () => {
     if (!form.texto || !form.concurso) return;
@@ -57,6 +52,9 @@ export default function Topicos({ concursos }) {
             {importing ? 'Importando...' : '📥 Importar TJ-CE'}
           </button>
           <button className="btn btn-primary" onClick={() => setModal(true)}>+ Adicionar tópico</button>
+<button className="btn btn-ghost" onClick={importarTJCE} disabled={importing}>
+  {importing ? 'Importando...' : '📥 Importar TJ-CE'}
+</button>
         </div>
       </div>
 
