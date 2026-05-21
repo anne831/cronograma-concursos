@@ -136,3 +136,10 @@ select.form-input option { background: var(--bg3); }
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .hide-mobile { display: none !important; }
 }
+.show-mobile { display: none; }
+
+@media (max-width: 768px) {
+  .show-mobile { display: flex !important; }
+  .hide-mobile { display: none !important; }
+  main { padding-bottom: 80px !important; }
+}
