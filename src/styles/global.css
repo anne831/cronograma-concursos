@@ -141,5 +141,5 @@ select.form-input option { background: var(--bg3); }
 @media (max-width: 768px) {
   .show-mobile { display: flex !important; }
   .hide-mobile { display: none !important; }
-  main { padding-bottom: 80px !important; }
+  main { padding-top: 70px !important; padding-bottom: 1rem !important; }
 }

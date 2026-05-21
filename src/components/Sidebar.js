@@ -15,76 +15,68 @@ export default function Sidebar({ active, onChange }) {
 
   return (
     <>
+      {/* DESKTOP — barra lateral só com ícones */}
       <aside style={{
-        width: 220, flexShrink: 0, background: 'var(--bg2)',
+        width: 64, flexShrink: 0, background: 'var(--bg2)',
         borderRight: '0.5px solid var(--border)', height: '100vh',
-        display: 'flex', flexDirection: 'column', position: 'sticky', top: 0
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        position: 'sticky', top: 0, padding: '12px 0'
       }} className="hide-mobile">
 
-        {/* Perfil + Sair no TOPO */}
-        <div style={{ padding: '1rem', borderBottom: '0.5px solid var(--border)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-            <div style={{
-              width: 30, height: 30, borderRadius: '50%',
-              background: 'var(--accent-soft)', border: '0.5px solid rgba(124,111,255,0.3)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 12, fontWeight: 700, color: 'var(--accent2)', flexShrink: 0
-            }}>
-              {user?.displayName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || '?'}
-            </div>
-            <div style={{ overflow: 'hidden' }}>
-              <div style={{ fontSize: 12, fontWeight: 500, color: 'var(--text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {user?.displayName || 'Usuário'}
-              </div>
-              <div style={{ fontSize: 11, color: 'var(--text3)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {user?.email}
-              </div>
-            </div>
-          </div>
-          <button onClick={logout} style={{
-            width: '100%', padding: '7px', borderRadius: 6, border: '0.5px solid var(--border2)',
-            background: 'transparent', color: 'var(--text2)', fontSize: 12, cursor: 'pointer'
-          }}>
-            Sair
-          </button>
-        </div>
-
         {/* Logo */}
-        <div style={{ padding: '1rem', borderBottom: '0.5px solid var(--border)' }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 16, color: 'var(--text)' }}>
-            🎯📚 Cronograma
-          </div>
-          <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>Concursos Públicos</div>
-        </div>
+        <div style={{ fontSize: 22, marginBottom: 16 }}>🎯</div>
 
-        {/* Nav */}
-        <nav style={{ flex: 1, padding: '0.75rem 0.5rem', overflowY: 'auto' }}>
+        <div style={{ width: '100%', height: '0.5px', background: 'var(--border)', marginBottom: 8 }} />
+
+        {/* Nav ícones */}
+        <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, width: '100%', padding: '4px' }}>
           {navItems.map(item => (
-            <button key={item.id} onClick={() => onChange(item.id)} style={{
-              width: '100%', display: 'flex', alignItems: 'center', gap: 10,
-              padding: '10px 12px', borderRadius: 8, border: 'none', marginBottom: 2,
-              background: active === item.id ? 'var(--accent-soft)' : 'transparent',
-              color: active === item.id ? 'var(--accent2)' : 'var(--text2)',
-              fontSize: 13, fontWeight: active === item.id ? 500 : 400,
-              transition: 'var(--transition)', cursor: 'pointer', textAlign: 'left'
-            }}>
-              <span style={{ fontSize: 15 }}>{item.icon}</span>
-              {item.label}
+            <button key={item.id} onClick={() => onChange(item.id)}
+              title={item.label}
+              style={{
+                width: 44, height: 44, borderRadius: 10, border: 'none',
+                background: active === item.id ? 'var(--accent-soft)' : 'transparent',
+                fontSize: 20, cursor: 'pointer', display: 'flex',
+                alignItems: 'center', justifyContent: 'center',
+                transition: 'var(--transition)',
+                outline: active === item.id ? '0.5px solid rgba(124,111,255,0.3)' : 'none'
+              }}>
+              {item.icon}
             </button>
           ))}
         </nav>
+
+        <div style={{ width: '100%', height: '0.5px', background: 'var(--border)', marginBottom: 8 }} />
+
+        {/* Avatar + Sair */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+          <div title={user?.displayName || user?.email} style={{
+            width: 32, height: 32, borderRadius: '50%',
+            background: 'var(--accent-soft)', border: '0.5px solid rgba(124,111,255,0.3)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 12, fontWeight: 700, color: 'var(--accent2)'
+          }}>
+            {user?.displayName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || '?'}
+          </div>
+          <button onClick={logout} title="Sair" style={{
+            width: 32, height: 32, borderRadius: 8, border: '0.5px solid var(--border2)',
+            background: 'transparent', fontSize: 14, cursor: 'pointer', color: 'var(--text2)'
+          }}>
+            ↩
+          </button>
+        </div>
       </aside>
 
-      {/* MOBILE — barra inferior */}
+      {/* MOBILE — barra no TOPO */}
       <nav style={{
-        position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 50,
-        background: 'var(--bg2)', borderTop: '0.5px solid var(--border)',
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+        background: 'var(--bg2)', borderBottom: '0.5px solid var(--border)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-around',
-        padding: '8px 0 calc(8px + env(safe-area-inset-bottom))',
+        padding: '8px 0',
       }} className="show-mobile">
         {navItems.map(item => (
           <button key={item.id} onClick={() => onChange(item.id)} style={{
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
             padding: '4px 8px', border: 'none', background: 'transparent',
             color: active === item.id ? 'var(--accent2)' : 'var(--text3)',
             fontSize: 10, fontWeight: active === item.id ? 600 : 400,
