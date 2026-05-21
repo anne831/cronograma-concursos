@@ -41,8 +41,7 @@ export default function Auth() {
             width: 56, height: 56, borderRadius: 16,
             background: 'var(--accent-soft)', border: '1px solid rgba(108,99,255,0.3)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 1rem', fontSize: 28
-          fontSize: 24
+            margin: '0 auto 1rem', fontSize: 24
           }}>🎯📚</div>
           <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 800, color: 'var(--text)' }}>
             Cronograma<br />

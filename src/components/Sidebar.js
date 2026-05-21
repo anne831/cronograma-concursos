@@ -89,3 +89,9 @@ export default function Sidebar({ active, onChange }) {
           }}>
             <span style={{ fontSize: 20 }}>{item.icon}</span>
             {item.label.split(' ')[0]}
+            </button>
+        ))}
+      </nav>
+    </>
+  );
+}
