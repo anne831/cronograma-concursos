@@ -20,28 +20,9 @@ export default function Sidebar({ active, onChange }) {
         borderRight: '0.5px solid var(--border)', height: '100vh',
         display: 'flex', flexDirection: 'column', position: 'sticky', top: 0
       }} className="hide-mobile">
-        <div style={{ padding: '1.25rem 1rem', borderBottom: '0.5px solid var(--border)' }}>
-          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 16, color: 'var(--text)' }}>
-            🎯📚 Cronograma
-          </div>
-          <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>Concursos Públicos</div>
-        </div>
-        <nav style={{ flex: 1, padding: '0.75rem 0.5rem', overflowY: 'auto' }}>
-          {navItems.map(item => (
-            <button key={item.id} onClick={() => onChange(item.id)} style={{
-              width: '100%', display: 'flex', alignItems: 'center', gap: 10,
-              padding: '10px 12px', borderRadius: 8, border: 'none', marginBottom: 2,
-              background: active === item.id ? 'var(--accent-soft)' : 'transparent',
-              color: active === item.id ? 'var(--accent2)' : 'var(--text2)',
-              fontSize: 13, fontWeight: active === item.id ? 500 : 400,
-              transition: 'var(--transition)', cursor: 'pointer', textAlign: 'left'
-            }}>
-              <span style={{ fontSize: 15 }}>{item.icon}</span>
-              {item.label}
-            </button>
-          ))}
-        </nav>
-        <div style={{ padding: '1rem', borderTop: '0.5px solid var(--border)' }}>
+
+        {/* Perfil + Sair no TOPO */}
+        <div style={{ padding: '1rem', borderBottom: '0.5px solid var(--border)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
             <div style={{
               width: 30, height: 30, borderRadius: '50%',
@@ -67,8 +48,34 @@ export default function Sidebar({ active, onChange }) {
             Sair
           </button>
         </div>
+
+        {/* Logo */}
+        <div style={{ padding: '1rem', borderBottom: '0.5px solid var(--border)' }}>
+          <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 16, color: 'var(--text)' }}>
+            🎯📚 Cronograma
+          </div>
+          <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>Concursos Públicos</div>
+        </div>
+
+        {/* Nav */}
+        <nav style={{ flex: 1, padding: '0.75rem 0.5rem', overflowY: 'auto' }}>
+          {navItems.map(item => (
+            <button key={item.id} onClick={() => onChange(item.id)} style={{
+              width: '100%', display: 'flex', alignItems: 'center', gap: 10,
+              padding: '10px 12px', borderRadius: 8, border: 'none', marginBottom: 2,
+              background: active === item.id ? 'var(--accent-soft)' : 'transparent',
+              color: active === item.id ? 'var(--accent2)' : 'var(--text2)',
+              fontSize: 13, fontWeight: active === item.id ? 500 : 400,
+              transition: 'var(--transition)', cursor: 'pointer', textAlign: 'left'
+            }}>
+              <span style={{ fontSize: 15 }}>{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+        </nav>
       </aside>
 
+      {/* MOBILE — barra inferior */}
       <nav style={{
         position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 50,
         background: 'var(--bg2)', borderTop: '0.5px solid var(--border)',
