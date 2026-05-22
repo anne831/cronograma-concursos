@@ -39,7 +39,7 @@ export default function Concursos() {
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 800 }}>Concursos</h2>
           <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 2 }}>{concursos.length} concursos cadastrados</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setModal(true)}>+ Novo concurso</button>
+      <button className="btn btn-primary btn-sm" onClick={() => setModal(true)}>+ Novo concurso</button>
       </div>
 
       {concursos.length === 0 ? (
