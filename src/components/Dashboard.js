@@ -46,7 +46,6 @@ export default function Dashboard({ concursos, onNavigate }) {
 
   return (
     <div style={{ maxWidth: 600 }}>
-      {/* Header */}
       <div style={{ marginBottom: '1.5rem' }}>
         <div style={{ fontSize: 22, fontWeight: 700, fontFamily: 'var(--font-display)', color: 'var(--text)' }}>
           {saudacao()}, {user?.displayName?.split(' ')[0] || 'Anne'} 👋
@@ -56,7 +55,6 @@ export default function Dashboard({ concursos, onNavigate }) {
         </div>
       </div>
 
-      {/* Cards métricas */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12, marginBottom: '1.25rem' }}>
         {[
           { label: 'Horas hoje', val: horasHoje.toFixed(1) + 'h', icon: '⏱️', color: 'var(--accent2)', action: 'grade' },
@@ -80,7 +78,6 @@ export default function Dashboard({ concursos, onNavigate }) {
         ))}
       </div>
 
-      {/* Próxima prova */}
       {proximaProva ? (
         <div style={{
           background: 'var(--surface)', border: '0.5px solid var(--border)',
@@ -112,7 +109,6 @@ export default function Dashboard({ concursos, onNavigate }) {
         </div>
       )}
 
-      {/* Estudos de hoje */}
       <div style={{ marginBottom: '1.25rem' }}>
         <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text2)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           Estudos de hoje
@@ -137,7 +133,6 @@ export default function Dashboard({ concursos, onNavigate }) {
         ))}
       </div>
 
-      {/* Acesso rápido */}
       <div>
         <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text2)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           Acesso rápido
