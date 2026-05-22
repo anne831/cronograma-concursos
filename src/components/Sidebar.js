@@ -7,7 +7,8 @@ const navItems = [
   { id: 'progresso', icon: '📊', label: 'Progresso' },
   { id: 'revisao', icon: '🔄', label: 'Revisão' },
   { id: 'topicos', icon: '✅', label: 'Tópicos' },
-  { id: 'concursos', icon: '🏛️', label: 'Concursos' },
+  { id: 'concursos', icon: '🏛️', label: 'Concursos'},
+  { id: 'editais', icon: '📄', label: 'Editais' },
 ];
 
 export default function Sidebar({ active, onChange }) {

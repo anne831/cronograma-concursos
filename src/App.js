@@ -9,6 +9,7 @@ import Progresso from './components/Progresso';
 import Revisao from './components/Revisao';
 import Topicos from './components/Topicos';
 import Concursos from './components/Concursos';
+import Editais from './components/Editais';
 import './styles/global.css';
 
 function AppContent() {
@@ -29,7 +30,8 @@ function AppContent() {
     progresso: <Progresso />,
     revisao: <Revisao concursos={concursos} />,
     topicos: <Topicos concursos={concursos} />,
-    concursos: <Concursos />,
+   concursos: <Concursos />,
+   editais: <Editais />,
   };
 
   return (
