@@ -49,7 +49,7 @@ export default function Concursos() {
           style={{
             background: 'var(--accent)', color: '#fff',
             border: 'none', borderRadius: 8,
-            padding: '8px 16px', fontSize: 13,
+            padding: '10px 20px', fontSize: 14,
             fontWeight: 500, cursor: 'pointer',
             whiteSpace: 'nowrap'
           }}>
