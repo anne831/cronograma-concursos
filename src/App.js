@@ -39,7 +39,7 @@ function AppContent() {
       <div className="hide-mobile">
         <Sidebar active={view} onChange={setView} />
       </div>
-   <main style={{ flex: 1, overflowY: 'auto', padding: '2rem', width: '100%' }}>
+   <main style={{ flex: 1, overflowY: 'auto', padding: '2rem', width: '100%', minWidth: 0 }}>
         {views[view]}
       </main>
     </div>
