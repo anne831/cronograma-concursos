@@ -60,7 +60,7 @@ export default function Dashboard({ concursos, onNavigate }) {
   const CORES = ['#7c6fff', '#34d399', '#60a5fa', '#fbbf24', '#f87171'];
 
   return (
-    <div style={{ width: '100%', maxWidth: 700 }}>
+   <div style={{ width: '100%' }}>
 
       {/* Saudação */}
       <div style={{ marginBottom: 24 }}>
