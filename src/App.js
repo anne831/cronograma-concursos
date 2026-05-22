@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { getConcursos } from './firebase/services';
 import Auth from './components/Auth';
 import Sidebar from './components/Sidebar';
+import Dashboard from './components/Dashboard';
 import GradeSemanal from './components/GradeSemanal';
 import Progresso from './components/Progresso';
 import Revisao from './components/Revisao';
@@ -12,7 +13,7 @@ import './styles/global.css';
 
 function AppContent() {
   const { user } = useAuth();
-  const [view, setView] = useState('grade');
+  const [view, setView] = useState('dashboard');
   const [concursos, setConcursos] = useState([]);
 
   useEffect(() => {
@@ -23,6 +24,7 @@ function AppContent() {
   if (!user) return <Auth />;
 
   const views = {
+    dashboard: <Dashboard concursos={concursos} onNavigate={setView} />,
     grade: <GradeSemanal concursos={concursos} />,
     progresso: <Progresso />,
     revisao: <Revisao concursos={concursos} />,
