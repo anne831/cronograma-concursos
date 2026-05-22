@@ -44,17 +44,9 @@ export default function Concursos() {
             {concursos.length} concurso{concursos.length !== 1 ? 's' : ''} cadastrado{concursos.length !== 1 ? 's' : ''}
           </p>
         </div>
-        <button
-          onClick={() => setModal(true)}
-          style={{
-            background: 'var(--accent)', color: '#fff',
-            border: 'none', borderRadius: 8,
-            padding: '10px 20px', fontSize: 14,
-            fontWeight: 500, cursor: 'pointer',
-            whiteSpace: 'nowrap'
-          }}>
-          + Novo concurso
-        </button>
+       <button className="btn btn-primary" onClick={() => setModal(true)}>
+       + Novo concurso
+</button>
       </div>
 
       {/* Lista */}
@@ -63,13 +55,9 @@ export default function Concursos() {
           <div style={{ fontSize: 48, marginBottom: 12 }}>🏛️</div>
           <div style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 6 }}>Nenhum concurso cadastrado</div>
           <div style={{ fontSize: 13 }}>Comece cadastrando os concursos que está estudando</div>
-          <button onClick={() => setModal(true)} style={{
-            background: 'var(--accent)', color: '#fff', border: 'none',
-            borderRadius: 8, padding: '9px 18px', fontSize: 13,
-            fontWeight: 500, cursor: 'pointer', marginTop: 20
-          }}>
-            + Cadastrar primeiro concurso
-          </button>
+          <button className="btn btn-primary" onClick={() => setModal(true)} style={{ marginTop: 20 }}>
+          + Cadastrar primeiro concurso
+</button>
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
