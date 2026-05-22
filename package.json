@@ -2,7 +2,7 @@
   "name": "cronograma-concursos",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://SEU_USUARIO.github.io/cronograma-concursos",
+  "homepage": "/",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
