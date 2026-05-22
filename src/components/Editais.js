@@ -238,15 +238,29 @@ export default function Editais({ onImportarMaterias }) {
               ))}
             </div>
 
-            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-              <button className="btn btn-ghost" onClick={() => setModal(false)}>Cancelar</button>
-              <button className="btn btn-primary" onClick={salvarEdital} disabled={!concursoNome}>
-                💾 Salvar edital
-              </button>
-            </div>
-          </div>
+          <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+  <button className="btn btn-ghost" onClick={() => setModal(false)}>Cancelar</button>
+  <button className="btn btn-ghost" onClick={salvarEdital} disabled={!concursoNome}>
+    💾 Salvar edital
+  </button>
+  <button className="btn btn-primary" onClick={async () => {
+    await salvarEdital();
+    const { addTopico } = await import('../firebase/services');
+    for (const mat of selecionadas) {
+      await addTopico(user.uid, {
+        texto: mat,
+        concurso: concursoNome,
+        materia: mat
+      });
+    }
+    alert('✅ Matérias importadas para Tópicos!');
+  }} disabled={!concursoNome}>
+    📥 Salvar e importar Tópicos
+  </button>
+</div>
         </div>
-      )}
-    </div>
+      </div>
+    )}
+  </div>
   );
 }
