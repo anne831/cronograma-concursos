@@ -34,13 +34,22 @@ export default function Concursos() {
 
   return (
     <div>
-  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
-    <div>
-      <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 800 }}>Concursos</h2>
-      <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 2 }}>{concursos.length} concursos cadastrados</p>
-    </div>
-    <button className="btn btn-primary btn-sm" onClick={() => setModal(true)}>+ Novo concurso</button>
+<div style={{ 
+  display: 'flex', 
+  alignItems: 'flex-start', 
+  justifyContent: 'space-between', 
+  marginBottom: '1.25rem',
+  flexWrap: 'wrap',
+  gap: 12
+}}>
+  <div>
+    <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 800, color: 'var(--text)', margin: 0 }}>Concursos</h2>
+    <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 2 }}>{concursos.length} concursos cadastrados</p>
   </div>
+  <button className="btn btn-primary btn-sm" onClick={() => setModal(true)} style={{ flexShrink: 0 }}>
+    + Novo concurso
+  </button>
+</div>
 
       {concursos.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '4rem 2rem', color: 'var(--text3)' }}>
