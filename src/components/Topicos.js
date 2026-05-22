@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { getTopicos, addTopico, toggleTopico, deleteTopico } from '../firebase/services';
+import { addTopico, toggleTopico, deleteTopico } from '../firebase/services';
 import { TOPICOS_TJCE } from './TopicosIniciais';
 
 export default function Topicos({ concursos }) {
   const { user } = useAuth();
-  const [topicos, setTopicos] = useState([]);
+  const [topicos, setTopicos] = useState([]); // eslint-disable-line
   const [modal, setModal] = useState(false);
   const [filtro, setFiltro] = useState('all');
   const [form, setForm] = useState({ texto: '', concurso: '', materia: '' });
