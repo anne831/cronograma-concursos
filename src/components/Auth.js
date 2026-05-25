@@ -48,7 +48,7 @@ export default function Auth() {
       justifyContent: 'center', padding: '1rem',
       background: 'radial-gradient(ellipse at 20% 50%, rgba(108,99,255,0.12) 0%, transparent 60%), var(--bg)'
     }}>
-      <div style={{ width: '100%', maxWidth: '400px' }}>
+     <div style={{ width: '100%', maxWidth: '360px' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <div style={{
             width: 56, height: 56, borderRadius: 16,
@@ -56,7 +56,7 @@ export default function Auth() {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 1rem', fontSize: 24
           }}>🎯📚</div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 26, fontWeight: 800, color: 'var(--text)' }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 800, color: 'var(--text)' }}>
             Cronograma<br />
             <span style={{ color: 'var(--accent2)' }}>de Concursos</span>
           </h1>
@@ -65,7 +65,7 @@ export default function Auth() {
           </p>
         </div>
 
-        <div className="card" style={{ padding: '1.75rem' }}>
+        <div className="card" style={{ padding: '1.25rem' }}>
           {/* Botão Google */}
           <button onClick={loginGoogle} disabled={loading} style={{
             width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
