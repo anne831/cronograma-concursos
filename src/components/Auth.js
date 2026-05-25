@@ -44,34 +44,57 @@ export default function Auth() {
 
   return (
     <div style={{
-      minHeight: '100vh', display: 'flex', alignItems: 'center',
-      justifyContent: 'center', padding: '1rem',
-      background: 'radial-gradient(ellipse at 20% 50%, rgba(108,99,255,0.12) 0%, transparent 60%), var(--bg)'
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '1rem',
+      background: `
+        radial-gradient(ellipse at 0% 0%, rgba(124,111,255,0.18) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 100%, rgba(52,211,153,0.12) 0%, transparent 50%),
+        var(--bg)
+      `,
+      animation: 'fadeIn 0.4s ease'
     }}>
-     <div style={{ width: '100%', maxWidth: '360px' }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+      <div style={{ width: '100%', maxWidth: '360px', animation: 'slideUp 0.4s ease' }}>
+
+        {/* Logo e título */}
+        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
           <div style={{
-            width: 56, height: 56, borderRadius: 16,
-            background: 'var(--accent-soft)', border: '1px solid rgba(108,99,255,0.3)',
+            width: 52, height: 52, borderRadius: 14,
+            background: 'linear-gradient(135deg, var(--accent), #a78bfa)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 1rem', fontSize: 24
+            margin: '0 auto 1rem', fontSize: 22,
+            boxShadow: '0 8px 24px rgba(124,111,255,0.3)'
           }}>🎯📚</div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 800, color: 'var(--text)' }}>
+          <h1 style={{
+            fontFamily: 'var(--font-display)', fontSize: 22,
+            fontWeight: 800, color: 'var(--text)', margin: 0, lineHeight: 1.3
+          }}>
             Cronograma<br />
             <span style={{ color: 'var(--accent2)' }}>de Concursos</span>
           </h1>
-          <p style={{ color: 'var(--text2)', fontSize: 14, marginTop: 8 }}>
-            Organize seus estudos para múltiplos concursos
+          <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 8, fontStyle: 'italic' }}>
+            "O sucesso é a soma de pequenos esforços repetidos dia após dia."
           </p>
         </div>
 
-        <div className="card" style={{ padding: '1.25rem' }}>
+        {/* Card */}
+        <div style={{
+          background: 'var(--surface)',
+          border: '0.5px solid var(--border2)',
+          borderRadius: 16,
+          padding: '1.5rem',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
+        }}>
           {/* Botão Google */}
           <button onClick={loginGoogle} disabled={loading} style={{
             width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            gap: 10, padding: '10px', borderRadius: 8, border: '0.5px solid var(--border2)',
-            background: 'var(--bg3)', color: 'var(--text)', fontSize: 14, fontWeight: 500,
-            cursor: 'pointer', marginBottom: 16, transition: 'var(--transition)'
+            gap: 10, padding: '11px', borderRadius: 8,
+            border: '0.5px solid var(--border2)',
+            background: 'var(--bg3)', color: 'var(--text)',
+            fontSize: 14, fontWeight: 500, cursor: 'pointer',
+            marginBottom: 16, transition: 'var(--transition)'
           }}>
             <svg width="18" height="18" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -82,25 +105,32 @@ export default function Auth() {
             Entrar com Google
           </button>
 
+          {/* Divisor */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
             <div style={{ flex: 1, height: '0.5px', background: 'var(--border)' }} />
             <span style={{ fontSize: 12, color: 'var(--text3)' }}>ou</span>
             <div style={{ flex: 1, height: '0.5px', background: 'var(--border)' }} />
           </div>
 
-          <div style={{ display: 'flex', gap: 4, marginBottom: '1.5rem', background: 'var(--bg3)', borderRadius: 10, padding: 4 }}>
+          {/* Tabs */}
+          <div style={{
+            display: 'flex', gap: 4, marginBottom: '1.25rem',
+            background: 'var(--bg3)', borderRadius: 10, padding: 4
+          }}>
             {['login', 'signup'].map(m => (
               <button key={m} onClick={() => setMode(m)} style={{
-                flex: 1, padding: '8px', borderRadius: 8, border: 'none', fontSize: 14, fontWeight: 500,
+                flex: 1, padding: '7px', borderRadius: 8, border: 'none',
+                fontSize: 13, fontWeight: 500,
                 background: mode === m ? 'var(--surface2)' : 'transparent',
                 color: mode === m ? 'var(--text)' : 'var(--text2)',
-                transition: 'var(--transition)'
+                transition: 'var(--transition)', cursor: 'pointer'
               }}>
                 {m === 'login' ? 'Entrar' : 'Criar conta'}
               </button>
             ))}
           </div>
 
+          {/* Formulário */}
           <form onSubmit={submit}>
             {mode === 'signup' && (
               <div className="form-group">
@@ -119,13 +149,25 @@ export default function Auth() {
               <input name="password" type="password" value={form.password} onChange={handle} required
                 className="form-input" placeholder="••••••••" minLength={6} />
             </div>
+
             {error && (
-              <div style={{ background: 'var(--red-soft)', border: '1px solid rgba(248,113,113,0.2)',
-                borderRadius: 8, padding: '10px 14px', fontSize: 13, color: 'var(--red)', marginBottom: 12 }}>
+              <div style={{
+                background: 'var(--red-soft)',
+                border: '0.5px solid rgba(248,113,113,0.2)',
+                borderRadius: 8, padding: '10px 14px',
+                fontSize: 13, color: 'var(--red)', marginBottom: 12
+              }}>
                 {error}
               </div>
             )}
-            <button type="submit" className="btn btn-primary w-full" style={{ justifyContent: 'center', marginTop: 4 }} disabled={loading}>
+
+            <button type="submit" disabled={loading} style={{
+              width: '100%', padding: '10px', borderRadius: 8,
+              border: 'none', background: 'var(--accent)', color: '#fff',
+              fontSize: 14, fontWeight: 600, cursor: 'pointer',
+              marginTop: 4, transition: 'var(--transition)',
+              boxShadow: '0 4px 12px rgba(124,111,255,0.3)'
+            }}>
               {loading ? 'Aguarde...' : mode === 'login' ? 'Entrar' : 'Criar conta'}
             </button>
           </form>
