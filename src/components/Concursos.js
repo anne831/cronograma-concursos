@@ -35,19 +35,19 @@ export default function Concursos() {
     <div style={{ width: '100%' }}>
 
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
-        <div>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
-            Concursos
-          </h2>
-          <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 4 }}>
-            {concursos.length} concurso{concursos.length !== 1 ? 's' : ''} cadastrado{concursos.length !== 1 ? 's' : ''}
-          </p>
-        </div>
-       <button className="btn btn-primary" onClick={() => setModal(true)}>
-       + Novo concurso
-</button>
-      </div>
+<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
+  <div>
+    <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+      Concursos
+    </h2>
+    <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 4 }}>
+      {concursos.length} concurso{concursos.length !== 1 ? 's' : ''} cadastrado{concursos.length !== 1 ? 's' : ''}
+    </p>
+  </div>
+  <button className="btn btn-primary" onClick={() => setModal(true)}>
+    + Novo concurso
+  </button>
+</div>
 
       {/* Lista */}
       {concursos.length === 0 ? (
