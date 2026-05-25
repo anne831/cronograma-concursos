@@ -108,5 +108,29 @@ export default function Auth() {
                 <input name="name" value={form.name} onChange={handle} required
                   className="form-input" placeholder="Seu nome" />
               </div>
-            );
-            }
+            )}
+            <div className="form-group">
+              <label className="form-label">E-mail</label>
+              <input name="email" type="email" value={form.email} onChange={handle} required
+                className="form-input" placeholder="seu@email.com" />
+            </div>
+            <div className="form-group">
+              <label className="form-label">Senha</label>
+              <input name="password" type="password" value={form.password} onChange={handle} required
+                className="form-input" placeholder="••••••••" minLength={6} />
+            </div>
+            {error && (
+              <div style={{ background: 'var(--red-soft)', border: '1px solid rgba(248,113,113,0.2)',
+                borderRadius: 8, padding: '10px 14px', fontSize: 13, color: 'var(--red)', marginBottom: 12 }}>
+                {error}
+              </div>
+            )}
+            <button type="submit" className="btn btn-primary w-full" style={{ justifyContent: 'center', marginTop: 4 }} disabled={loading}>
+              {loading ? 'Aguarde...' : mode === 'login' ? 'Entrar' : 'Criar conta'}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
