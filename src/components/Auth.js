@@ -66,7 +66,7 @@ export default function Auth() {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 1rem', fontSize: 22,
             boxShadow: '0 8px 24px rgba(124,111,255,0.3)'
-          }}>🎯📚</div>
+          }}>🎯</div>
           <h1 style={{
             fontFamily: 'var(--font-display)', fontSize: 22,
             fontWeight: 800, color: 'var(--text)', margin: 0, lineHeight: 1.3
