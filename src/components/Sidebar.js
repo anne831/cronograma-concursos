@@ -4,13 +4,12 @@ import { useAuth } from '../contexts/AuthContext';
 const navItems = [
   { id: 'dashboard', icon: '🏠', label: 'Dashboard' },
   { id: 'grade', icon: '📅', label: 'Grade semanal' },
-  { id: 'progresso', icon: '📊', label: 'Progresso' },
-  { id: 'revisao', icon: '🔄', label: 'Revisão' },
-  { id: 'topicos', icon: '✅', label: 'Tópicos' },
-  { id: 'concursos', icon: '🏛️', label: 'Concursos'},
-  { id: 'editais', icon: '📄', label: 'Editais' },
+  { id: 'progresso', icon: '📈', label: 'Progresso' },
+  { id: 'revisao', icon: '🔁', label: 'Revisão' },
+  { id: 'topicos', icon: '✏️', label: 'Tópicos' },
+  { id: 'concursos', icon: '🏛️', label: 'Concursos' },
+  { id: 'editais', icon: '📋', label: 'Editais' },
 ];
-
 export default function Sidebar({ active, onChange }) {
   const { user, logout } = useAuth();
 
@@ -32,15 +31,17 @@ export default function Sidebar({ active, onChange }) {
         {/* Nav ícones */}
         <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, width: '100%', padding: '4px' }}>
           {navItems.map(item => (
-            <button key={item.id} onClick={() => onChange(item.id)}
+          <button key={item.id} onClick={() => onChange(item.id)}
               title={item.label}
+              className="nav-btn"
               style={{
-                width: 44, height: 44, borderRadius: 10, border: 'none',
-                background: active === item.id ? 'var(--accent-soft)' : 'transparent',
-                fontSize: 20, cursor: 'pointer', display: 'flex',
-                alignItems: 'center', justifyContent: 'center',
-                transition: 'var(--transition)',
-                outline: active === item.id ? '0.5px solid rgba(124,111,255,0.3)' : 'none'
+               width: 44, height: 44, borderRadius: 10, border: 'none',
+               background: active === item.id ? 'var(--accent-soft)' : 'transparent',
+               fontSize: 20, cursor: 'pointer', display: 'flex',
+               alignItems: 'center', justifyContent: 'center',
+               transition: 'all 0.2s ease',
+               soutline: active === item.id ? '0.5px solid rgba(124,111,255,0.3)' : 'none',
+               transform: 'scale(1)',
               }}>
               {item.icon}
             </button>
