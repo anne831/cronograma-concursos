@@ -59,7 +59,6 @@ export default function Editais({ onImportarMaterias }) {
       if (match) materias.add(match[0].toUpperCase().trim());
     });
 
-    // Busca por padrões de conteúdo programático
     const linhas = texto.split('\n');
     linhas.forEach(linha => {
       if (linha.match(/^[A-Z\s]{5,40}:/) || linha.match(/^\d+\.\s+[A-Z]/)) {
@@ -81,10 +80,8 @@ export default function Editais({ onImportarMaterias }) {
     try {
       setProgresso('Extraindo texto...');
       const texto = await extrairTexto(arquivo);
-
       setProgresso('Identificando matérias...');
       const materias = extrairMaterias(texto);
-
       setMateriasExtraidas(materias);
       setSelecionadas(materias);
       setEditalAtual({ nome: arquivo.name, texto: texto.slice(0, 5000) });
@@ -117,6 +114,7 @@ export default function Editais({ onImportarMaterias }) {
 
   return (
     <div style={{ width: '100%' }}>
+
       {/* Header */}
       <div style={{ marginBottom: 24 }}>
         <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
@@ -125,18 +123,18 @@ export default function Editais({ onImportarMaterias }) {
         <p style={{ fontSize: 13, color: 'var(--text2)', marginTop: 4 }}>
           Importe editais em PDF e extraia as matérias automaticamente
         </p>
+        <div style={{ marginTop: 10 }}>
+          <label style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            background: 'var(--accent)', color: '#fff',
+            padding: '8px 16px', borderRadius: 8, fontSize: 13,
+            fontWeight: 500, cursor: 'pointer'
+          }}>
+            {loading ? `⏳ ${progresso}` : '📄 Importar edital PDF'}
+            <input type="file" accept=".pdf" onChange={handleUpload} style={{ display: 'none' }} disabled={loading} />
+          </label>
+        </div>
       </div>
-
-      {/* Botão upload */}
-      <label style={{
-        display: 'inline-flex', alignItems: 'center', gap: 8,
-        background: 'var(--accent)', color: '#fff',
-        padding: '9px 18px', borderRadius: 8, fontSize: 13,
-        fontWeight: 500, cursor: 'pointer', marginBottom: 24
-      }}>
-        {loading ? `⏳ ${progresso}` : '📄 Importar edital PDF'}
-        <input type="file" accept=".pdf" onChange={handleUpload} style={{ display: 'none' }} disabled={loading} />
-      </label>
 
       {/* Lista de editais */}
       {editais.length === 0 ? (
@@ -200,18 +198,15 @@ export default function Editais({ onImportarMaterias }) {
         <div className="modal-backdrop" onClick={() => setModal(false)}>
           <div className="modal" style={{ maxWidth: 520 }} onClick={e => e.stopPropagation()}>
             <div className="modal-title">📄 Matérias identificadas</div>
-
             <div className="form-group">
               <label className="form-label">Nome do concurso</label>
               <input className="form-input" value={concursoNome}
                 onChange={e => setConcursoNome(e.target.value)}
                 placeholder="Ex: TJ-CE 2026" />
             </div>
-
             <div style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 8 }}>
               Selecione as matérias que deseja salvar:
             </div>
-
             <div style={{ maxHeight: 280, overflowY: 'auto', marginBottom: 16 }}>
               {materiasExtraidas.length === 0 ? (
                 <div style={{ fontSize: 13, color: 'var(--text3)', padding: '1rem', textAlign: 'center' }}>
@@ -237,30 +232,25 @@ export default function Editais({ onImportarMaterias }) {
                 </div>
               ))}
             </div>
-
-          <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-  <button className="btn btn-ghost" onClick={() => setModal(false)}>Cancelar</button>
-  <button className="btn btn-ghost" onClick={salvarEdital} disabled={!concursoNome}>
-    💾 Salvar edital
-  </button>
-  <button className="btn btn-primary" onClick={async () => {
-    await salvarEdital();
-    const { addTopico } = await import('../firebase/services');
-    for (const mat of selecionadas) {
-      await addTopico(user.uid, {
-        texto: mat,
-        concurso: concursoNome,
-        materia: mat
-      });
-    }
-    alert('✅ Matérias importadas para Tópicos!');
-  }} disabled={!concursoNome}>
-    📥 Salvar e importar Tópicos
-  </button>
-</div>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+              <button className="btn btn-ghost" onClick={() => setModal(false)}>Cancelar</button>
+              <button className="btn btn-ghost" onClick={salvarEdital} disabled={!concursoNome}>
+                💾 Salvar edital
+              </button>
+              <button className="btn btn-primary" onClick={async () => {
+                await salvarEdital();
+                const { addTopico } = await import('../firebase/services');
+                for (const mat of selecionadas) {
+                  await addTopico(user.uid, { texto: mat, concurso: concursoNome, materia: mat });
+                }
+                alert('✅ Matérias importadas para Tópicos!');
+              }} disabled={!concursoNome}>
+                📥 Salvar e importar Tópicos
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    )}
-  </div>
+      )}
+    </div>
   );
 }

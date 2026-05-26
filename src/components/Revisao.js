@@ -42,15 +42,17 @@ export default function Revisao({ concursos }) {
 
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
-        <div>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 800 }}>Revisão espaçada</h2>
-          <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 2 }}>
-            {urgentes.length} pendentes · {revisoes.length} tópicos no total
-          </p>
-        </div>
-        <button className="btn btn-primary" onClick={() => setModal(true)}>+ Adicionar tópico</button>
-      </div>
+  <div style={{ marginBottom: '1.25rem' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>Revisão espaçada</h2>
+    </div>
+    <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 4 }}>
+      {urgentes.length} pendentes · {revisoes.length} tópicos no total
+    </p>
+    <div style={{ marginTop: 10 }}>
+      <button className="btn btn-primary" onClick={() => setModal(true)}>+ Adicionar tópico</button>
+    </div>
+  </div>
 
       <div className="card" style={{ marginBottom: '1rem', background: 'var(--bg2)' }}>
         <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>Como funciona</div>
