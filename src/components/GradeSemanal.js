@@ -63,8 +63,8 @@ export default function GradeSemanal({ concursos }) {
     <div style={{ width: '100%' }}>
 
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
-        <div>
+        <div style={{ marginBottom: 24 }}>
+          <div>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
             Grade semanal
           </h2>
@@ -73,10 +73,10 @@ export default function GradeSemanal({ concursos }) {
             <span style={{ marginLeft: 10, color: 'var(--accent2)', fontWeight: 500 }}>{totalHoras.toFixed(1)}h estudadas</span>
           </p>
         </div>
-        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-          <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(w => w - 1)}>←</button>
+        <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
+          <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(w => w - 1)}>← Anterior</button>
           <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(0)}>Hoje</button>
-          <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(w => w + 1)}>→</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(w => w + 1)}>Próxima →</button>
         </div>
       </div>
 
