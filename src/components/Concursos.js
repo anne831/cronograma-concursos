@@ -32,44 +32,44 @@ export default function Concursos() {
   };
 
   return (
-  <div style={{ width: '100%' }}>
+    <div style={{ width: '100%' }}>
 
-  {/* Header */}
-  <div style={{ marginBottom: 24 }}>
-    <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
-      Concursos
-    </h2>
-    <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 4 }}>
-      {concursos.length} concurso{concursos.length !== 1 ? 's' : ''} cadastrado{concursos.length !== 1 ? 's' : ''}
-    </p>
-    <div style={{ marginTop: 10 }}>
-      <button className="btn btn-primary" onClick={() => setModal(true)}>
-        + Novo concurso
-      </button>
-    </div>
-  </div>
+      {/* Header */}
+      <div style={{ marginBottom: 24 }}>
+        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+          Concursos
+        </h2>
+        <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 4 }}>
+          {concursos.length} concurso{concursos.length !== 1 ? 's' : ''} cadastrado{concursos.length !== 1 ? 's' : ''}
+        </p>
+        <div style={{ marginTop: 10 }}>
+          <button className="btn btn-primary" onClick={() => setModal(true)}>
+            + Novo concurso
+          </button>
+        </div>
+      </div>
 
-  {/* Lista */}
-  {concursos.length === 0 ? (
-    <div style={{ textAlign: 'center', padding: '4rem 2rem', color: 'var(--text3)' }}>
-      <div style={{ fontSize: 48, marginBottom: 12 }}>🏛️</div>
+      {/* Lista */}
+      {concursos.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '4rem 2rem', color: 'var(--text3)' }}>
+          <div style={{ fontSize: 48, marginBottom: 12 }}>🏛️</div>
           <div style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 6 }}>Nenhum concurso cadastrado</div>
           <div style={{ fontSize: 13 }}>Comece cadastrando os concursos que está estudando</div>
           <button className="btn btn-primary" onClick={() => setModal(true)} style={{ marginTop: 20 }}>
-          + Cadastrar primeiro concurso
-</button>
+            + Cadastrar primeiro concurso
+          </button>
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
           {concursos.map(c => {
             const dias = diasParaProva(c.dataProva);
-             (
+            return (
               <div key={c.id} style={{
                 background: 'var(--surface)', border: '0.5px solid var(--border)',
                 borderRadius: 12, padding: '1rem',
                 borderTop: `3px solid ${c.cor || CORES[0]}`
               }}>
-                <div sreturntyle={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 8 }}>
                   <div>
                     <div style={{ fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700, color: 'var(--text)' }}>
                       {c.nome}
@@ -161,11 +161,7 @@ export default function Concursos() {
             </div>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 4 }}>
               <button className="btn btn-ghost" onClick={() => setModal(false)}>Cancelar</button>
-              <button onClick={handleAdd} disabled={saving || !form.nome} style={{
-                background: 'var(--accent)', color: '#fff', border: 'none',
-                borderRadius: 8, padding: '8px 16px', fontSize: 13,
-                fontWeight: 500, cursor: 'pointer'
-              }}>
+              <button className="btn btn-primary" onClick={handleAdd} disabled={saving || !form.nome}>
                 {saving ? 'Salvando...' : 'Cadastrar'}
               </button>
             </div>
