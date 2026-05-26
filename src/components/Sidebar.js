@@ -4,7 +4,6 @@ import { useAuth } from '../contexts/AuthContext';
 const navItems = [
   { id: 'dashboard', icon: '🏠', label: 'Dashboard' },
   { id: 'grade', icon: '📅', label: 'Grade semanal' },
-  { id: 'progresso', icon: '📈', label: 'Progresso' },
   { id: 'revisao', icon: '🔁', label: 'Revisão' },
   { id: 'topicos', icon: '✏️', label: 'Tópicos' },
   { id: 'concursos', icon: '🏛️', label: 'Concursos' },

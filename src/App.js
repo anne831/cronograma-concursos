@@ -5,7 +5,6 @@ import Auth from './components/Auth';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
 import GradeSemanal from './components/GradeSemanal';
-import Progresso from './components/Progresso';
 import Revisao from './components/Revisao';
 import Topicos from './components/Topicos';
 import Concursos from './components/Concursos';
@@ -27,7 +26,6 @@ function AppContent() {
   const views = {
     dashboard: <Dashboard concursos={concursos} onNavigate={setView} />,
     grade: <GradeSemanal concursos={concursos} />,
-    progresso: <Progresso />,
     revisao: <Revisao concursos={concursos} />,
     topicos: <Topicos concursos={concursos} />,
    concursos: <Concursos />,
