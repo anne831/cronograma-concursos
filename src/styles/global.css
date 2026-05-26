@@ -144,13 +144,14 @@ select.form-input option { background: var(--bg3); }
   main { padding-top: 70px !important; padding-bottom: 1rem !important; }
 }
 .nav-btn:hover span {
-  animation: bounce 0.4s ease;
+  animation: bounce 0.4s ease forwards;
   display: inline-block;
+  transform-origin: center;
 }
 
 @keyframes bounce {
-  0% { transform: scale(1); }
+  0% { transform: scale(1) rotate(0deg); }
   30% { transform: scale(1.4) rotate(-10deg); }
   60% { transform: scale(0.9) rotate(5deg); }
-  100% { transform: scale(1); }
+  100% { transform: scale(1) rotate(0deg); }
 }
