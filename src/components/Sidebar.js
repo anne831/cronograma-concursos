@@ -29,25 +29,23 @@ export default function Sidebar({ active, onChange }) {
         <div style={{ width: '100%', height: '0.5px', background: 'var(--border)', marginBottom: 8 }} />
 
         {/* Nav ícones */}
-        <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, width: '100%', padding: '4px' }}>
-          {navItems.map(item => (
-          <button key={item.id} onClick={() => onChange(item.id)}
-              title={item.label}
-              className="nav-btn"
-              style={{
-               width: 44, height: 44, borderRadius: 10, border: 'none',
-               background: active === item.id ? 'var(--accent-soft)' : 'transparent',
-               fontSize: 20, cursor: 'pointer', display: 'flex',
-               alignItems: 'center', justifyContent: 'center',
-               transition: 'all 0.2s ease',
-               soutline: active === item.id ? '0.5px solid rgba(124,111,255,0.3)' : 'none',
-               transform: 'scale(1)',
-              }}>
-              {item.icon}
-            </button>
-          ))}
-        </nav>
-
+<nav style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, width: '100%', padding: '4px' }}>
+  {navItems.map(item => (
+    <button key={item.id} onClick={() => onChange(item.id)}
+      title={item.label}
+      className="nav-btn"
+      style={{
+        width: 44, height: 44, borderRadius: 10, border: 'none',
+        background: active === item.id ? 'var(--accent-soft)' : 'transparent',
+        fontSize: 20, cursor: 'pointer', display: 'flex',
+        alignItems: 'center', justifyContent: 'center',
+        transition: 'all 0.2s ease',
+        outline: active === item.id ? '0.5px solid rgba(124,111,255,0.3)' : 'none',
+      }}>
+      <span style={{ display: 'inline-block' }}>{item.icon}</span>
+    </button>
+  ))}
+</nav>
         <div style={{ width: '100%', height: '0.5px', background: 'var(--border)', marginBottom: 8 }} />
 
         {/* Avatar + Sair */}
