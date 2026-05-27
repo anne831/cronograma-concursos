@@ -98,13 +98,15 @@ export default function Dashboard({ concursos, onNavigate }) {
       </div>
 
       {/* Linha 2 — Próxima prova + Gráfico */}
-      <div style={{ display: 'grid', gridTemplateColumns: proximaProva ? '1fr 2fr' : '1fr', gap: 12, marginBottom: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: proximaProva ? '1fr 2fr' : '1fr', gap: 12, marginBottom: 12, alignItems: 'stretch' }}>
+
         {/* Próxima prova */}
         {proximaProva && (
           <div style={{
             background: 'var(--surface)', border: '0.5px solid var(--border)',
             borderRadius: 12, padding: '14px 16px',
-            borderLeft: `4px solid ${proximaProva.cor || 'var(--accent)'}`
+            borderLeft: `4px solid ${proximaProva.cor || 'var(--accent)'}`,
+            display: 'flex', flexDirection: 'column', justifyContent: 'center'
           }}>
             <div style={{ fontSize: 11, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 6 }}>
               Próxima prova
@@ -123,7 +125,8 @@ export default function Dashboard({ concursos, onNavigate }) {
         {/* Gráfico últimos 7 dias */}
         <div style={{
           background: 'var(--surface)', border: '0.5px solid var(--border)',
-          borderRadius: 12, padding: '14px 16px'
+          borderRadius: 12, padding: '14px 16px',
+          display: 'flex', flexDirection: 'column', justifyContent: 'space-between'
         }}>
           <div style={{ fontSize: 11, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 12 }}>
             Horas estudadas — últimos 7 dias
@@ -150,7 +153,7 @@ export default function Dashboard({ concursos, onNavigate }) {
       </div>
 
       {/* Linha 3 — Progresso por matéria + Estudos hoje + Acesso rápido */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 12, alignItems: 'stretch' }}>
 
         {/* Progresso por matéria */}
         <div style={{
