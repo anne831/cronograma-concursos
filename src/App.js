@@ -9,6 +9,7 @@ import Revisao from './components/Revisao';
 import Topicos from './components/Topicos';
 import Concursos from './components/Concursos';
 import Editais from './components/Editais';
+import Notificacoes from './components/Notificacoes';
 import './styles/global.css';
 
 function AppContent() {
