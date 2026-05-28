@@ -34,6 +34,7 @@ function AppContent() {
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <Notificacoes />
       <div className="hide-mobile">
         <Sidebar active={view} onChange={setView} />
       </div>
