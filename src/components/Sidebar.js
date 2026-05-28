@@ -66,26 +66,30 @@ export default function Sidebar({ active, onChange }) {
         </div>
       </aside>
 
-      {/* MOBILE — barra no TOPO */}
-      <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-        background: 'var(--bg2)', borderBottom: '0.5px solid var(--border)',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-around',
-        padding: '8px 0',
-      }} className="show-mobile">
-        {navItems.map(item => (
-          <button key={item.id} onClick={() => onChange(item.id)} style={{
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
-            padding: '4px 8px', border: 'none', background: 'transparent',
-            color: active === item.id ? 'var(--accent2)' : 'var(--text3)',
-            fontSize: 10, fontWeight: active === item.id ? 600 : 400,
-            transition: 'var(--transition)', cursor: 'pointer'
-          }}>
-            <span style={{ fontSize: 18 }}>{item.icon}</span>
-            {item.label.split(' ')[0]}
-          </button>
-        ))}
-      </nav>
+     {/* MOBILE — barra no TOPO estilo Pill */}
+<nav style={{
+  position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+  background: 'var(--bg2)', borderBottom: '0.5px solid var(--border)',
+  display: 'flex', alignItems: 'center', justifyContent: 'space-around',
+  padding: '8px 6px',
+}} className="show-mobile">
+  {navItems.map(item => (
+    <button key={item.id} onClick={() => onChange(item.id)} style={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
+      padding: active === item.id ? '5px 12px' : '5px 8px',
+      border: 'none',
+      background: active === item.id ? 'var(--accent-soft)' : 'transparent',
+      borderRadius: 20,
+      color: active === item.id ? 'var(--accent2)' : 'var(--text3)',
+      fontSize: 10, fontWeight: active === item.id ? 600 : 400,
+      transition: 'all 0.2s ease', cursor: 'pointer',
+      outline: active === item.id ? '0.5px solid rgba(124,111,255,0.3)' : 'none'
+    }}>
+      <span style={{ fontSize: 18, display: 'inline-block' }}>{item.icon}</span>
+      {item.label.split(' ')[0]}
+    </button>
+  ))}
+</nav>
     </>
   );
 }
