@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { LayoutDashboard, CalendarDays, RefreshCw, PencilLine, Building2, FileText, LogOut } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, RefreshCw, PencilLine, Building2, LogOut } from 'lucide-react';
 
 const navItems = [
   { id: 'dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
@@ -8,7 +8,6 @@ const navItems = [
   { id: 'revisao', icon: <RefreshCw size={20} />, label: 'Revisão' },
   { id: 'topicos', icon: <PencilLine size={20} />, label: 'Tópicos' },
   { id: 'concursos', icon: <Building2 size={20} />, label: 'Concursos' },
-  { id: 'editais', icon: <FileText size={20} />, label: 'Editais' },
 ];
 
 export default function Sidebar({ active, onChange }) {

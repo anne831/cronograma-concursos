@@ -8,7 +8,6 @@ import GradeSemanal from './components/GradeSemanal';
 import Revisao from './components/Revisao';
 import Topicos from './components/Topicos';
 import Concursos from './components/Concursos';
-import Editais from './components/Editais';
 import Notificacoes from './components/Notificacoes';
 import './styles/global.css';
 
@@ -29,8 +28,7 @@ function AppContent() {
     grade: <GradeSemanal concursos={concursos} />,
     revisao: <Revisao concursos={concursos} />,
     topicos: <Topicos concursos={concursos} />,
-   concursos: <Concursos />,
-   editais: <Editais />,
+    concursos: <Concursos />,
   };
 
   return (
@@ -39,7 +37,7 @@ function AppContent() {
       <div className="hide-mobile">
         <Sidebar active={view} onChange={setView} />
       </div>
-   <main style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '2rem', width: '100%', minWidth: 0, height: '100vh' }}>
+      <main style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '2rem', width: '100%', minWidth: 0, height: '100vh' }}>
         {views[view]}
       </main>
     </div>

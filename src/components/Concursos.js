@@ -1,39 +1,139 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { getConcursos, addConcurso, deleteConcurso } from '../firebase/services';
+import { getConcursos, addConcurso, deleteConcurso, addTopico } from '../firebase/services';
 import { format } from 'date-fns';
-
+ 
 const CORES = ['#6c63ff','#22d3a0','#f87171','#fbbf24','#60a5fa','#f472b6'];
-
+ 
+const FORM_VAZIO = { nome: '', orgao: '', dataProva: '', cargo: '', cor: CORES[0] };
+ 
 export default function Concursos() {
   const { user } = useAuth();
   const [concursos, setConcursos] = useState([]);
   const [modal, setModal] = useState(false);
-  const [form, setForm] = useState({ nome: '', orgao: '', dataProva: '', cargo: '', cor: CORES[0] });
+  const [form, setForm] = useState(FORM_VAZIO);
   const [saving, setSaving] = useState(false);
-
+ 
+  // ── Importação de edital ──
+  const [importando, setImportando] = useState(false);
+  const [progresso, setProgresso] = useState('');
+  const [materiasExtraidas, setMateriasExtraidas] = useState([]);
+  const [selecionadas, setSelecionadas] = useState([]);
+ 
   useEffect(() => {
     if (!user) return;
     return getConcursos(user.uid, setConcursos);
   }, [user]);
-
+ 
+  const fecharModal = () => {
+    setModal(false);
+    setForm(FORM_VAZIO);
+    setMateriasExtraidas([]);
+    setSelecionadas([]);
+    setProgresso('');
+  };
+ 
+  // ── Leitura do PDF ──
+  const extrairTexto = (arquivo) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const pdfjsLib = await import('pdfjs-dist/build/pdf');
+          pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
+          const pdf = await pdfjsLib.getDocument({ data: e.target.result }).promise;
+          let texto = '';
+          for (let i = 1; i <= Math.min(pdf.numPages, 20); i++) {
+            const page = await pdf.getPage(i);
+            const content = await page.getTextContent();
+            texto += content.items.map(item => item.str).join(' ') + '\n';
+          }
+          resolve(texto);
+        } catch {
+          resolve('');
+        }
+      };
+      reader.readAsArrayBuffer(arquivo);
+    });
+  };
+ 
+  const extrairMaterias = (texto) => {
+    const materias = new Set();
+    const padroes = [
+      /LÍNGUA PORTUGUESA/gi, /PORTUGUÊS/gi, /RACIOCÍNIO LÓGICO/gi,
+      /MATEMÁTICA/gi, /DIREITO CONSTITUCIONAL/gi, /DIREITO ADMINISTRATIVO/gi,
+      /DIREITO CIVIL/gi, /DIREITO PENAL/gi, /DIREITO PROCESSUAL CIVIL/gi,
+      /DIREITO PROCESSUAL PENAL/gi, /DIREITO TRABALHISTA/gi, /DIREITO TRIBUTÁRIO/gi,
+      /LEGISLAÇÃO/gi, /INFORMÁTICA/gi, /ATUALIDADES/gi, /CONHECIMENTOS GERAIS/gi,
+      /CONHECIMENTOS ESPECÍFICOS/gi, /CONTABILIDADE/gi, /ADMINISTRAÇÃO/gi,
+      /ECONOMIA/gi, /ESTATÍSTICA/gi, /INGLÊS/gi, /ESPANHOL/gi,
+    ];
+    padroes.forEach(p => {
+      const match = texto.match(p);
+      if (match) materias.add(match[0].toUpperCase().trim());
+    });
+ 
+    const linhas = texto.split('\n');
+    linhas.forEach(linha => {
+      if (linha.match(/^[A-Z\s]{5,40}:/) || linha.match(/^\d+\.\s+[A-Z]/)) {
+        const mat = linha.replace(/[:\d.]/g, '').trim();
+        if (mat.length > 4 && mat.length < 50) materias.add(mat);
+      }
+    });
+ 
+    return [...materias].slice(0, 30);
+  };
+ 
+  const handleUploadEdital = async (e) => {
+    const arquivo = e.target.files[0];
+    if (!arquivo) return;
+    setImportando(true);
+    setProgresso('Lendo o PDF...');
+    try {
+      setProgresso('Extraindo texto...');
+      const texto = await extrairTexto(arquivo);
+      setProgresso('Identificando matérias...');
+      const materias = extrairMaterias(texto);
+      setMateriasExtraidas(materias);
+      setSelecionadas(materias);
+      // Preenche o nome do concurso pelo nome do arquivo, se ainda estiver vazio
+      setForm(f => f.nome ? f : { ...f, nome: arquivo.name.replace(/\.pdf$/i, '') });
+      if (materias.length === 0) {
+        alert('Não consegui identificar matérias automaticamente neste PDF. Você pode cadastrar o concurso e adicionar os tópicos manualmente depois.');
+      }
+    } catch {
+      alert('Erro ao processar o PDF. Tente novamente.');
+    }
+    setImportando(false);
+    setProgresso('');
+    e.target.value = '';
+  };
+ 
+  const toggleMateria = (mat) => {
+    setSelecionadas(s => s.includes(mat) ? s.filter(m => m !== mat) : [...s, mat]);
+  };
+ 
   const handleAdd = async () => {
     if (!form.nome) return;
     setSaving(true);
-    await addConcurso(user.uid, form);
+    // 1) Cria o concurso já com as matérias selecionadas
+    await addConcurso(user.uid, { ...form, materias: selecionadas });
+    // 2) Cada matéria selecionada vira um tópico ligado a este concurso
+    for (const mat of selecionadas) {
+      await addTopico(user.uid, { texto: mat, concurso: form.nome, materia: mat });
+    }
     setSaving(false);
-    setModal(false);
-    setForm({ nome: '', orgao: '', dataProva: '', cargo: '', cor: CORES[0] });
+    fecharModal();
   };
-
+ 
   const diasParaProva = (data) => {
     if (!data) return null;
     return Math.ceil((new Date(data + 'T12:00:00') - new Date()) / (1000 * 60 * 60 * 24));
   };
-
+ 
   return (
     <div style={{ width: '100%' }}>
-
+ 
       {/* Header */}
       <div style={{ marginBottom: 24 }}>
         <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
@@ -48,7 +148,7 @@ export default function Concursos() {
           </button>
         </div>
       </div>
-
+ 
       {/* Lista */}
       {concursos.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '4rem 2rem', color: 'var(--text3)' }}>
@@ -81,13 +181,28 @@ export default function Concursos() {
                     fontSize: 18, cursor: 'pointer', padding: '0 4px', lineHeight: 1
                   }}>×</button>
                 </div>
-
+ 
                 {c.cargo && (
                   <div style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 8 }}>
                     <span style={{ color: 'var(--text3)' }}>Cargo: </span>{c.cargo}
                   </div>
                 )}
-
+ 
+                {/* Matérias importadas do edital */}
+                {c.materias && c.materias.length > 0 && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 8 }}>
+                    {c.materias.slice(0, 6).map((m, i) => (
+                      <span key={i} style={{
+                        fontSize: 10, background: 'var(--accent-soft)', color: 'var(--accent2)',
+                        padding: '2px 7px', borderRadius: 10
+                      }}>{m}</span>
+                    ))}
+                    {c.materias.length > 6 && (
+                      <span style={{ fontSize: 10, color: 'var(--text3)' }}>+{c.materias.length - 6} matérias</span>
+                    )}
+                  </div>
+                )}
+ 
                 {c.dataProva && (
                   <>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -119,12 +234,64 @@ export default function Concursos() {
           })}
         </div>
       )}
-
+ 
       {/* Modal */}
       {modal && (
-        <div className="modal-backdrop" onClick={() => setModal(false)}>
-          <div className="modal" onClick={e => e.stopPropagation()}>
+        <div className="modal-backdrop" onClick={fecharModal}>
+          <div className="modal" style={{ maxWidth: 520 }} onClick={e => e.stopPropagation()}>
             <div className="modal-title">🏛️ Novo concurso</div>
+ 
+            {/* Importar edital */}
+            <div style={{
+              background: 'var(--bg3)', border: '0.5px dashed var(--border2)',
+              borderRadius: 8, padding: '12px', marginBottom: 16
+            }}>
+              <div style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 8 }}>
+                Tem o edital em PDF? Importe para puxar as matérias automaticamente:
+              </div>
+              <label style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                background: 'var(--accent)', color: '#fff',
+                padding: '8px 16px', borderRadius: 8, fontSize: 13,
+                fontWeight: 500, cursor: importando ? 'default' : 'pointer',
+                opacity: importando ? 0.7 : 1
+              }}>
+                {importando ? `⏳ ${progresso}` : '📄 Importar edital (PDF)'}
+                <input type="file" accept=".pdf" onChange={handleUploadEdital} style={{ display: 'none' }} disabled={importando} />
+              </label>
+ 
+              {materiasExtraidas.length > 0 && (
+                <div style={{ marginTop: 12 }}>
+                  <div style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 6 }}>
+                    Matérias encontradas — toque para escolher quais salvar:
+                  </div>
+                  <div style={{ maxHeight: 180, overflowY: 'auto' }}>
+                    {materiasExtraidas.map((m, i) => (
+                      <div key={i} onClick={() => toggleMateria(m)} style={{
+                        display: 'flex', alignItems: 'center', gap: 10,
+                        padding: '7px 8px', borderRadius: 6, cursor: 'pointer',
+                        background: selecionadas.includes(m) ? 'var(--accent-soft)' : 'transparent',
+                        marginBottom: 4
+                      }}>
+                        <div style={{
+                          width: 16, height: 16, borderRadius: 4,
+                          border: `1.5px solid ${selecionadas.includes(m) ? 'var(--accent)' : 'var(--border2)'}`,
+                          background: selecionadas.includes(m) ? 'var(--accent)' : 'transparent',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
+                        }}>
+                          {selecionadas.includes(m) && <span style={{ color: '#fff', fontSize: 10 }}>✓</span>}
+                        </div>
+                        <span style={{ fontSize: 13, color: 'var(--text)' }}>{m}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 4 }}>
+                    As matérias selecionadas viram tópicos deste concurso automaticamente.
+                  </div>
+                </div>
+              )}
+            </div>
+ 
             <div className="form-group">
               <label className="form-label">Nome do concurso *</label>
               <input className="form-input" placeholder="Ex: TJ-CE, Polícia Federal"
@@ -160,7 +327,7 @@ export default function Concursos() {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 4 }}>
-              <button className="btn btn-ghost" onClick={() => setModal(false)}>Cancelar</button>
+              <button className="btn btn-ghost" onClick={fecharModal}>Cancelar</button>
               <button className="btn btn-primary" onClick={handleAdd} disabled={saving || !form.nome}>
                 {saving ? 'Salvando...' : 'Cadastrar'}
               </button>
@@ -171,3 +338,4 @@ export default function Concursos() {
     </div>
   );
 }
+ 
