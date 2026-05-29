@@ -81,3 +81,27 @@ export const getHoras = (userId, callback) => {
 
 export const registrarHoras = (userId, data) =>
   addDoc(collection(db, 'horas'), { ...data, userId, criadoEm: serverTimestamp() });
+
+// ─── QUESTÕES (banco de questões) ────────────────────────────
+export const getQuestoes = (userId, callback) => {
+  const q = query(collection(db, 'questoes'), where('userId', '==', userId));
+  return onSnapshot(q, snap => callback(snap.docs.map(d => ({ id: d.id, ...d.data() }))));
+};
+
+export const addQuestao = (userId, data) =>
+  addDoc(collection(db, 'questoes'), { ...data, userId, criadoEm: serverTimestamp() });
+
+export const updateQuestao = (id, data) => updateDoc(doc(db, 'questoes', id), data);
+
+export const deleteQuestao = (id) => deleteDoc(doc(db, 'questoes', id));
+
+// ─── SIMULADOS (resultados realizados) ───────────────────────
+export const getResultados = (userId, callback) => {
+  const q = query(collection(db, 'simulados'), where('userId', '==', userId));
+  return onSnapshot(q, snap => callback(snap.docs.map(d => ({ id: d.id, ...d.data() }))));
+};
+
+export const addResultado = (userId, data) =>
+  addDoc(collection(db, 'simulados'), { ...data, userId, criadoEm: serverTimestamp() });
+
+export const deleteResultado = (id) => deleteDoc(doc(db, 'simulados', id));

@@ -1,12 +1,13 @@
 import React from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { LayoutDashboard, CalendarDays, RefreshCw, PencilLine, Building2, LogOut } from 'lucide-react';
+import { LayoutDashboard, CalendarDays, RefreshCw, PencilLine, ClipboardList, Building2, LogOut } from 'lucide-react';
 
 const navItems = [
   { id: 'dashboard', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
   { id: 'grade', icon: <CalendarDays size={20} />, label: 'Grade semanal' },
   { id: 'revisao', icon: <RefreshCw size={20} />, label: 'Revisão' },
   { id: 'topicos', icon: <PencilLine size={20} />, label: 'Tópicos' },
+  { id: 'simulado', icon: <ClipboardList size={20} />, label: 'Simulado' },
   { id: 'concursos', icon: <Building2 size={20} />, label: 'Concursos' },
 ];
 
