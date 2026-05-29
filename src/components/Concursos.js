@@ -115,7 +115,7 @@ export default function Concursos() {
     linhas.forEach(bruta => {
       // tira numeração/romanos no começo e dois-pontos no fim
       let l = bruta
-        .replace(/^[\s]*(\d+[.)\-]?|[IVXLCDM]+[.)\-])\s+/i, '')
+        .replace(/^\s*(\d+[.)-]?|[IVXLCDM]+[.)-])\s+/i, '')
         .replace(/[:.;]+\s*$/, '')
         .trim();
 
