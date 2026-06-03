@@ -5,7 +5,7 @@ import { TOPICOS_TJCE } from './TopicosIniciais';
 import { onSnapshot, collection, query, where } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
-export default function Topicos({ concursos }) {
+export default function Topicos({ concursos, onIrSimulado }) {
   const { user } = useAuth();
   const [topicos, setTopicos] = useState([]);
   const [modal, setModal] = useState(false);
@@ -47,6 +47,19 @@ export default function Topicos({ concursos }) {
   const concluidos = lista.filter(t => t.concluido).length;
   const pct = lista.length > 0 ? Math.round(concluidos / lista.length * 100) : 0;
 
+  // Progresso agrupado por matéria (respeita o filtro de concurso, ignora o de matéria)
+  const alvoConcurso = filtro === 'all' ? 'all' : filtro;
+  const topicosDoConcurso = topicos.filter(t => filtro === 'all' || t.concurso === filtro);
+  const progressoPorMateria = Object.values(
+    topicosDoConcurso.reduce((acc, t) => {
+      const m = t.materia || 'Sem matéria';
+      if (!acc[m]) acc[m] = { materia: m, total: 0, feitos: 0 };
+      acc[m].total += 1;
+      if (t.concluido) acc[m].feitos += 1;
+      return acc;
+    }, {})
+  ).sort((a, b) => (b.feitos / b.total) - (a.feitos / a.total));
+
   return (
     <div style={{ width: '100%' }}>
 
@@ -68,6 +81,46 @@ export default function Topicos({ concursos }) {
           borderRadius: 3, transition: 'width 0.5s'
         }} />
       </div>
+
+      {/* Progresso por matéria */}
+      {progressoPorMateria.length > 0 && (
+        <div style={{ marginBottom: 22 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text2)', marginBottom: 10 }}>
+            Progresso por matéria
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {progressoPorMateria.map(g => {
+              const p = Math.round(g.feitos / g.total * 100);
+              const completo = p === 100;
+              return (
+                <div key={g.materia} onClick={() => setFiltroMateria(g.materia)} title="Tocar para filtrar a lista por esta matéria" style={{
+                  background: 'var(--surface)', border: `0.5px solid ${completo ? 'var(--green)' : 'var(--border)'}`,
+                  borderRadius: 10, padding: '10px 12px', cursor: 'pointer'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 6 }}>
+                    <span style={{ fontSize: 13, color: 'var(--text)', fontWeight: 500 }}>{g.materia}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+                      <span style={{ fontSize: 12, color: completo ? 'var(--green)' : 'var(--text3)' }}>
+                        {g.feitos}/{g.total} · {p}%
+                      </span>
+                      {completo && (
+                        <button
+                          onClick={(e) => { e.stopPropagation(); onIrSimulado && onIrSimulado(alvoConcurso, g.materia); }}
+                          className="btn btn-primary"
+                          style={{ padding: '4px 11px', fontSize: 12 }}
+                        >▶ Simulado</button>
+                      )}
+                    </div>
+                  </div>
+                  <div style={{ height: 5, background: 'var(--bg3)', borderRadius: 3, overflow: 'hidden' }}>
+                    <div style={{ width: p + '%', height: '100%', background: completo ? 'var(--green)' : 'var(--accent)', transition: 'width 0.4s' }} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* Botões de ação */}
       <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>

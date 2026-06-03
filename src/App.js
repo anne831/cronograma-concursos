@@ -16,6 +16,7 @@ function AppContent() {
   const { user } = useAuth();
   const [view, setView] = useState('dashboard');
   const [concursos, setConcursos] = useState([]);
+  const [simuladoAlvo, setSimuladoAlvo] = useState(null);
 
   useEffect(() => {
     if (!user) return;
@@ -24,12 +25,21 @@ function AppContent() {
 
   if (!user) return <Auth />;
 
+  // Navegação normal (menu / acesso rápido): limpa qualquer alvo de simulado pendente
+  const navegar = (v) => { setSimuladoAlvo(null); setView(v); };
+
+  // Deep-link: vai pro Simulado já com a matéria escolhida
+  const irParaSimulado = (concurso, materia) => {
+    setSimuladoAlvo({ concurso, materia });
+    setView('simulado');
+  };
+
   const views = {
-    dashboard: <Dashboard concursos={concursos} onNavigate={setView} />,
+    dashboard: <Dashboard concursos={concursos} onNavigate={navegar} />,
     grade: <GradeSemanal concursos={concursos} />,
     revisao: <Revisao concursos={concursos} />,
-    topicos: <Topicos concursos={concursos} />,
-    simulado: <Simulado concursos={concursos} />,
+    topicos: <Topicos concursos={concursos} onIrSimulado={irParaSimulado} />,
+    simulado: <Simulado concursos={concursos} alvo={simuladoAlvo} />,
     concursos: <Concursos />,
   };
 
@@ -37,7 +47,7 @@ function AppContent() {
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       <Notificacoes />
       <div className="hide-mobile">
-        <Sidebar active={view} onChange={setView} />
+        <Sidebar active={view} onChange={navegar} />
       </div>
       <main style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '2rem', width: '100%', minWidth: 0, height: '100vh' }}>
         {views[view]}
