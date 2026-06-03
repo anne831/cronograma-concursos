@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { getConcursos, addConcurso, deleteConcurso, addTopico } from '../firebase/services';
+import { getConcursos, addConcurso, updateConcurso, deleteConcurso, addTopico } from '../firebase/services';
 import { format } from 'date-fns';
+import { Pencil } from 'lucide-react';
 
 const CORES = ['#6c63ff','#22d3a0','#f87171','#fbbf24','#60a5fa','#f472b6'];
 
@@ -36,6 +37,7 @@ export default function Concursos() {
   const { user } = useAuth();
   const [concursos, setConcursos] = useState([]);
   const [modal, setModal] = useState(false);
+  const [editId, setEditId] = useState(null);
   const [form, setForm] = useState(FORM_VAZIO);
   const [saving, setSaving] = useState(false);
 
@@ -53,6 +55,7 @@ export default function Concursos() {
 
   const fecharModal = () => {
     setModal(false);
+    setEditId(null);
     setForm(FORM_VAZIO);
     setMateriasExtraidas([]);
     setSelecionadas([]);
@@ -190,12 +193,53 @@ export default function Concursos() {
     setManual('');
   };
 
-  const handleAdd = async () => {
+  const abrirNovo = () => {
+    setEditId(null);
+    setForm(FORM_VAZIO);
+    setMateriasExtraidas([]);
+    setSelecionadas([]);
+    setManual('');
+    setModal(true);
+  };
+
+  const abrirEdicao = (c) => {
+    setEditId(c.id);
+    setForm({
+      nome: c.nome || '',
+      orgao: c.orgao || '',
+      dataProva: c.dataProva || '',
+      cargo: c.cargo || '',
+      cor: c.cor || CORES[0],
+    });
+    const mats = c.materias || [];
+    setMateriasExtraidas(mats);
+    setSelecionadas(mats);
+    setManual('');
+    setModal(true);
+  };
+
+  const handleSalvar = async () => {
     if (!form.nome) return;
     setSaving(true);
-    await addConcurso(user.uid, { ...form, materias: selecionadas });
-    for (const mat of selecionadas) {
-      await addTopico(user.uid, { texto: mat, concurso: form.nome, materia: mat });
+    if (editId) {
+      // Edição: atualiza os campos (o nome fica travado para não quebrar os vínculos)
+      const original = concursos.find(c => c.id === editId);
+      const matsAntigas = (original && original.materias) || [];
+      await updateConcurso(editId, {
+        orgao: form.orgao, dataProva: form.dataProva, cargo: form.cargo,
+        cor: form.cor, materias: selecionadas,
+      });
+      // Cria tópico só para as matérias NOVAS (não mexe nas que já existiam)
+      const novas = selecionadas.filter(m => !matsAntigas.some(a => normaliza(a) === normaliza(m)));
+      for (const mat of novas) {
+        await addTopico(user.uid, { texto: mat, concurso: form.nome, materia: mat });
+      }
+    } else {
+      // Novo concurso
+      await addConcurso(user.uid, { ...form, materias: selecionadas });
+      for (const mat of selecionadas) {
+        await addTopico(user.uid, { texto: mat, concurso: form.nome, materia: mat });
+      }
     }
     setSaving(false);
     fecharModal();
@@ -218,7 +262,7 @@ export default function Concursos() {
           {concursos.length} concurso{concursos.length !== 1 ? 's' : ''} cadastrado{concursos.length !== 1 ? 's' : ''}
         </p>
         <div style={{ marginTop: 10 }}>
-          <button className="btn btn-primary" onClick={() => setModal(true)}>
+          <button className="btn btn-primary" onClick={abrirNovo}>
             + Novo concurso
           </button>
         </div>
@@ -230,7 +274,7 @@ export default function Concursos() {
           <div style={{ fontSize: 48, marginBottom: 12 }}>🏛️</div>
           <div style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 6 }}>Nenhum concurso cadastrado</div>
           <div style={{ fontSize: 13 }}>Comece cadastrando os concursos que está estudando</div>
-          <button className="btn btn-primary" onClick={() => setModal(true)} style={{ marginTop: 20 }}>
+          <button className="btn btn-primary" onClick={abrirNovo} style={{ marginTop: 20 }}>
             + Cadastrar primeiro concurso
           </button>
         </div>
@@ -251,10 +295,16 @@ export default function Concursos() {
                     </div>
                     {c.orgao && <div style={{ fontSize: 12, color: 'var(--text2)', marginTop: 2 }}>{c.orgao}</div>}
                   </div>
-                  <button onClick={() => deleteConcurso(c.id)} style={{
-                    background: 'none', border: 'none', color: 'var(--text3)',
-                    fontSize: 18, cursor: 'pointer', padding: '0 4px', lineHeight: 1
-                  }}>×</button>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
+                    <button onClick={() => abrirEdicao(c)} title="Editar" style={{
+                      background: 'none', border: 'none', color: 'var(--text3)',
+                      cursor: 'pointer', padding: '2px 4px', display: 'flex', alignItems: 'center'
+                    }}><Pencil size={15} /></button>
+                    <button onClick={() => deleteConcurso(c.id)} title="Excluir" style={{
+                      background: 'none', border: 'none', color: 'var(--text3)',
+                      fontSize: 18, cursor: 'pointer', padding: '0 4px', lineHeight: 1
+                    }}>×</button>
+                  </div>
                 </div>
 
                 {c.cargo && (
@@ -314,7 +364,7 @@ export default function Concursos() {
       {modal && (
         <div className="modal-backdrop" onClick={fecharModal}>
           <div className="modal" style={{ maxWidth: 520 }} onClick={e => e.stopPropagation()}>
-            <div className="modal-title">🏛️ Novo concurso</div>
+            <div className="modal-title">{editId ? '✏️ Editar concurso' : '🏛️ Novo concurso'}</div>
 
             {/* Importar edital + matérias */}
             <div style={{
@@ -394,7 +444,14 @@ export default function Concursos() {
             <div className="form-group">
               <label className="form-label">Nome do concurso *</label>
               <input className="form-input" placeholder="Ex: TJ-CE, Polícia Federal"
-                value={form.nome} onChange={e => setForm(f => ({ ...f, nome: e.target.value }))} />
+                value={form.nome} disabled={!!editId}
+                onChange={e => setForm(f => ({ ...f, nome: e.target.value }))}
+                style={editId ? { opacity: 0.6, cursor: 'not-allowed' } : undefined} />
+              {editId && (
+                <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 4 }}>
+                  O nome não pode ser alterado aqui — seus tópicos e questões estão ligados a ele.
+                </div>
+              )}
             </div>
             <div className="grid-2">
               <div className="form-group">
@@ -427,8 +484,8 @@ export default function Concursos() {
             </div>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 4 }}>
               <button className="btn btn-ghost" onClick={fecharModal}>Cancelar</button>
-              <button className="btn btn-primary" onClick={handleAdd} disabled={saving || !form.nome}>
-                {saving ? 'Salvando...' : 'Cadastrar'}
+              <button className="btn btn-primary" onClick={handleSalvar} disabled={saving || !form.nome}>
+                {saving ? 'Salvando...' : (editId ? 'Salvar alterações' : 'Cadastrar')}
               </button>
             </div>
           </div>

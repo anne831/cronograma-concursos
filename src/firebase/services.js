@@ -11,6 +11,8 @@ export const getConcursos = (userId, callback) => {
 export const addConcurso = (userId, data) =>
   addDoc(collection(db, 'concursos'), { ...data, userId, criadoEm: serverTimestamp() });
 
+export const updateConcurso = (id, data) => updateDoc(doc(db, 'concursos', id), data);
+
 export const deleteConcurso = (id) => deleteDoc(doc(db, 'concursos', id));
 
 // ─── SESSÕES DE ESTUDO ───────────────────────────────────────
