@@ -107,3 +107,16 @@ export const addResultado = (userId, data) =>
   addDoc(collection(db, 'simulados'), { ...data, userId, criadoEm: serverTimestamp() });
 
 export const deleteResultado = (id) => deleteDoc(doc(db, 'simulados', id));
+
+// ─── ANOTAÇÕES (caderno por matéria) ─────────────────────────
+export const getAnotacoes = (userId, callback) => {
+  const q = query(collection(db, 'anotacoes'), where('userId', '==', userId));
+  return onSnapshot(q, snap => callback(snap.docs.map(d => ({ id: d.id, ...d.data() }))));
+};
+
+export const addAnotacao = (userId, data) =>
+  addDoc(collection(db, 'anotacoes'), { ...data, userId, criadoEm: serverTimestamp() });
+
+export const updateAnotacao = (id, data) => updateDoc(doc(db, 'anotacoes', id), data);
+
+export const deleteAnotacao = (id) => deleteDoc(doc(db, 'anotacoes', id));

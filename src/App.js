@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import GradeSemanal from './components/GradeSemanal';
 import Revisao from './components/Revisao';
 import Topicos from './components/Topicos';
+import Anotacoes from './components/Anotacoes';
 import Simulado from './components/Simulado';
 import Concursos from './components/Concursos';
 import Notificacoes from './components/Notificacoes';
@@ -39,6 +40,7 @@ function AppContent() {
     grade: <GradeSemanal concursos={concursos} />,
     revisao: <Revisao concursos={concursos} />,
     topicos: <Topicos concursos={concursos} onIrSimulado={irParaSimulado} />,
+    anotacoes: <Anotacoes concursos={concursos} />,
     simulado: <Simulado concursos={concursos} alvo={simuladoAlvo} />,
     concursos: <Concursos />,
   };
