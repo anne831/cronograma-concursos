@@ -18,6 +18,15 @@ function AppContent() {
   const [view, setView] = useState('dashboard');
   const [concursos, setConcursos] = useState([]);
   const [simuladoAlvo, setSimuladoAlvo] = useState(null);
+  const [tema, setTema] = useState(() => localStorage.getItem('tema') || 'dark');
+
+  // Aplica o tema no app inteiro e salva a preferência
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', tema);
+    localStorage.setItem('tema', tema);
+  }, [tema]);
+
+  const alternarTema = () => setTema(t => (t === 'dark' ? 'light' : 'dark'));
 
   useEffect(() => {
     if (!user) return;
@@ -36,7 +45,7 @@ function AppContent() {
   };
 
   const views = {
-    dashboard: <Dashboard concursos={concursos} onNavigate={navegar} />,
+    dashboard: <Dashboard concursos={concursos} onNavigate={navegar} tema={tema} onAlternarTema={alternarTema} />,
     grade: <GradeSemanal concursos={concursos} />,
     revisao: <Revisao concursos={concursos} />,
     topicos: <Topicos concursos={concursos} onIrSimulado={irParaSimulado} />,

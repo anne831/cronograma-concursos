@@ -3,8 +3,9 @@ import { useAuth } from '../contexts/AuthContext';
 import { getSessoes, getRevisoes, getTopicos } from '../firebase/services';
 import { format, differenceInDays, parseISO, startOfWeek, subDays } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { Sun, Moon } from 'lucide-react';
 
-export default function Dashboard({ concursos, onNavigate }) {
+export default function Dashboard({ concursos, onNavigate, tema = 'dark', onAlternarTema }) {
   const { user } = useAuth();
   const [sessoes, setSessoes] = useState([]);
   const [revisoes, setRevisoes] = useState([]);
@@ -63,13 +64,27 @@ export default function Dashboard({ concursos, onNavigate }) {
     <div style={{ width: '100%' }}>
 
       {/* Saudação */}
-      <div style={{ marginBottom: 20 }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
-          {saudacao()}, {user?.displayName?.split(' ')[0] || 'Anne'} 👋
-        </h2>
-        <p style={{ fontSize: 13, color: 'var(--text2)', marginTop: 4 }}>
-          {format(new Date(), "EEEE, dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
-        </p>
+      <div style={{ marginBottom: 20, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
+        <div>
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
+            {saudacao()}, {user?.displayName?.split(' ')[0] || 'Anne'} 👋
+          </h2>
+          <p style={{ fontSize: 13, color: 'var(--text2)', marginTop: 4 }}>
+            {format(new Date(), "EEEE, dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
+          </p>
+        </div>
+        <button
+          onClick={onAlternarTema}
+          title={tema === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
+          style={{
+            flexShrink: 0, width: 40, height: 40, borderRadius: 10,
+            border: '0.5px solid var(--border2)', background: 'var(--surface)',
+            color: 'var(--text2)', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
+          }}
+        >
+          {tema === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
       </div>
 
       {/* Linha 1 — Métricas principais */}
