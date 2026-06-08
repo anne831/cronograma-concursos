@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { getConcursos } from './firebase/services';
+import { Sun, Moon } from 'lucide-react';
 import Auth from './components/Auth';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
@@ -45,7 +46,7 @@ function AppContent() {
   };
 
   const views = {
-    dashboard: <Dashboard concursos={concursos} onNavigate={navegar} tema={tema} onAlternarTema={alternarTema} />,
+    dashboard: <Dashboard concursos={concursos} onNavigate={navegar} />,
     grade: <GradeSemanal concursos={concursos} />,
     revisao: <Revisao concursos={concursos} />,
     topicos: <Topicos concursos={concursos} onIrSimulado={irParaSimulado} />,
@@ -63,6 +64,23 @@ function AppContent() {
       <main style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '2rem', width: '100%', minWidth: 0, height: '100vh' }}>
         {views[view]}
       </main>
+
+      {/* Botão flutuante de tema (claro/escuro) */}
+      <button
+        onClick={alternarTema}
+        title={tema === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
+        aria-label="Alternar tema"
+        style={{
+          position: 'fixed', bottom: 20, right: 20, zIndex: 60,
+          width: 44, height: 44, borderRadius: 12,
+          border: '0.5px solid var(--border2)', background: 'var(--surface)',
+          color: 'var(--text2)', cursor: 'pointer',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          boxShadow: '0 4px 16px rgba(0,0,0,0.22)'
+        }}
+      >
+        {tema === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+      </button>
     </div>
   );
 }
