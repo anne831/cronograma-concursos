@@ -1,12 +1,110 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Cada usuário só acessa seus próprios dados
-    match /{collection}/{document} {
-      allow read, write: if request.auth != null
-        && resource.data.userId == request.auth.uid;
-      allow create: if request.auth != null
-        && request.resource.data.userId == request.auth.uid;
+
+    // Helper: usuário autenticado
+    function isAuth() {
+      return request.auth != null;
+    }
+    function isOwner() {
+      return isAuth() && request.resource.data.userId == request.auth.uid;
+    }
+    function isExistingOwner() {
+      return isAuth() && resource.data.userId == request.auth.uid;
+    }
+
+    // ─── CONCURSOS ───────────────────────────────────────────────
+    match /concursos/{id} {
+      allow create: if isOwner()
+        && request.resource.data.nome is string
+        && request.resource.data.nome.size() >= 3
+        && request.resource.data.dataInicio is timestamp
+        && request.resource.data.dataFim is timestamp;
+      allow read, update, delete: if isExistingOwner();
+    }
+
+    // ─── SESSÕES DE ESTUDO ───────────────────────────────────────
+    match /sessoes/{id} {
+      allow create: if isOwner()
+        && request.resource.data.concurso is string
+        && request.resource.data.materia is string
+        && request.resource.data.hora is string
+        && request.resource.data.duracao is number
+        && request.resource.data.duracao > 0
+        && request.resource.data.data is string;
+      allow read, update, delete: if isExistingOwner();
+    }
+
+    // ─── TÓPICOS / CHECKLIST ─────────────────────────────────────
+    match /topicos/{id} {
+      allow create: if isOwner()
+        && request.resource.data.titulo is string
+        && request.resource.data.titulo.size() >= 3
+        && request.resource.data.concurso is string
+        && request.resource.data.materia is string;
+      allow read, update, delete: if isExistingOwner();
+    }
+
+    // ─── REVISÕES ESPAÇADAS ──────────────────────────────────────
+    match /revisoes/{id} {
+      allow create: if isOwner()
+        && request.resource.data.topico is string
+        && request.resource.data.concurso is string
+        && request.resource.data.materia is string
+        && request.resource.data.intervalo is number
+        && request.resource.data.proximaRevisao is timestamp;
+      allow read, update, delete: if isExistingOwner();
+    }
+
+    // ─── HORAS ESTUDADAS ─────────────────────────────────────────
+    match /horas/{id} {
+      allow create: if isOwner()
+        && request.resource.data.data is string
+        && request.resource.data.duracao is number
+        && request.resource.data.duracao > 0
+        && request.resource.data.concurso is string
+        && request.resource.data.materia is string;
+      allow read, update, delete: if isExistingOwner();
+    }
+
+    // ─── QUESTÕES ────────────────────────────────────────────────
+    match /questoes/{id} {
+      allow create: if isOwner()
+        && request.resource.data.enunciado is string
+        && request.resource.data.alternativas is list
+        && request.resource.data.alternativas.size() >= 2
+        && request.resource.data.alternativas.size() <= 6
+        && request.resource.data.respostaCorreta is int
+        && request.resource.data.concurso is string
+        && request.resource.data.materia is string;
+      allow read, update, delete: if isExistingOwner();
+    }
+
+    // ─── RESULTADOS DE SIMULADOS ─────────────────────────────────
+    match /simulados/{id} {
+      allow create: if isOwner()
+        && request.resource.data.concurso is string
+        && request.resource.data.materia is string
+        && request.resource.data.acertos is int
+        && request.resource.data.total is int
+        && request.resource.data.data is string;
+      allow read, update, delete: if isExistingOwner();
+    }
+
+    // ─── ANOTAÇÕES ───────────────────────────────────────────────
+    match /anotacoes/{id} {
+      allow create: if isOwner()
+        && request.resource.data.titulo is string
+        && request.resource.data.conteudo is string
+        && request.resource.data.concurso is string
+        && request.resource.data.materia is string;
+      allow read, update, delete: if isExistingOwner();
+    }
+
+    // ─── BACKUP METADATA ─────────────────────────────────────────
+    match /backups/{id} {
+      allow read: if isAuth();
+      allow create, update, delete: if false;
     }
   }
 }
