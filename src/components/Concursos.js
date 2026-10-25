@@ -270,7 +270,7 @@ export default function Concursos() {
 
       {/* Lista */}
       {concursos.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '4rem 2rem', color: 'var(--text3)' }} role="status" aria-live="polite"
+        <div style={{ textAlign: 'center', padding: '4rem 2rem', color: 'var(--text3)' }} role="status" aria-live="polite">
           <div style={{ fontSize: 48, marginBottom: 12 }}>🏛️</div>
           <div style={{ fontSize: 16, color: 'var(--text)', fontWeight: 600, marginBottom: 6 }}>Nenhum concurso cadastrado</div>
           <div style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 16 }}>Comece cadastrando os concursos que está estudando</div>
