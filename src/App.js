@@ -12,6 +12,7 @@ import Anotacoes from './components/Anotacoes';
 import Simulado from './components/Simulado';
 import Concursos from './components/Concursos';
 import Notificacoes from './components/Notificacoes';
+import OfflineBanner from './components/OfflineBanner';
 import './styles/global.css';
 
 function AppContent() {
@@ -54,6 +55,7 @@ function AppContent() {
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <OfflineBanner />
       <Notificacoes />
 
       {view !== 'dashboard' && (
