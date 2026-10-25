@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getConcursos, getSessoes, getTopicos, getRevisoes, getHoras, getQuestoes, getResultados, getAnotacoes } from '../firebase/services';
-import { Download, FileJson, FileSpreadsheet, FileText } from 'lucide-react';
+import { Download, FileJson, FileSpreadsheet } from 'lucide-react';
 
 export default function ExportarDados({ onClose }) {
   const { user } = useAuth();
