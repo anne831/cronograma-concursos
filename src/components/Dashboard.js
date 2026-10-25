@@ -20,6 +20,16 @@ export default function Dashboard({ concursos, onNavigate }) {
     return () => { u1(); u2(); u3(); };
   }, [user]);
 
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    if (!user) return;
+    const u1 = getSessoes(user.uid, setSessoes);
+    const u2 = getRevisoes(user.uid, setRevisoes);
+    const u3 = getTopicos(user.uid, setTopicos);
+    const t = setTimeout(() => setLoading(false), 400);
+    return () => { u1(); u2(); u3(); clearTimeout(t); };
+  }, [user]);
+
   const hoje = format(new Date(), 'yyyy-MM-dd');
   const semanaStart = format(startOfWeek(new Date(), { weekStartsOn: 0 }), 'yyyy-MM-dd');
   const horasHoje = sessoes.filter(s => s.data === hoje).reduce((a, s) => a + (s.duracao || 0), 0);
@@ -61,7 +71,6 @@ export default function Dashboard({ concursos, onNavigate }) {
   const sessoesHoje = sessoes.filter(s => s.data === hoje);
   const CORES = ['#7c6fff', '#34d399', '#60a5fa', '#fbbf24', '#f87171'];
 
-  return (
     <div style={{ width: '100%' }}>
 
       {/* Saudação */}
@@ -86,12 +95,14 @@ export default function Dashboard({ concursos, onNavigate }) {
             background: 'var(--surface)', border: '0.5px solid var(--border)',
             borderRadius: 12, padding: '14px 16px', cursor: 'pointer',
             display: 'flex', alignItems: 'center', gap: 12,
-            transition: 'var(--transition)'
+            opacity: loading ? 0.6 : 1,
+            transform: loading ? 'translateY(6px)' : 'translateY(0)',
+            transition: 'opacity 0.3s ease, transform 0.3s ease'
           }}>
-            <div style={{ fontSize: 24 }}>{c.icon}</div>
+            {loading ? <div className="spinner" /> : <div style={{ fontSize: 24 }}>{c.icon}</div>}
             <div>
-              <div style={{ fontSize: 20, fontWeight: 700, fontFamily: 'var(--font-display)', color: c.color, lineHeight: 1 }}>
-                {c.val}
+              <div style={{ fontSize: 20, fontWeight: 700, fontFamily: 'var(--font-display)', color: loading ? 'var(--text2)' : c.color, lineHeight: 1 }}>
+                {loading ? '...' : c.val}
               </div>
               <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 3 }}>{c.label}</div>
             </div>
