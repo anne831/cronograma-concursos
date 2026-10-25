@@ -65,7 +65,7 @@ export default function Dashboard({ concursos, onNavigate }) {
     <div style={{ width: '100%' }}>
 
       {/* Saudação */}
-      <div style={{ marginBottom: 20 }}>
+      <div style={{ marginBottom: 24 }}>
         <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
           {saudacao()}, {user?.displayName?.split(' ')[0] || 'Anne'} 👋
         </h2>
