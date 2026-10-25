@@ -151,7 +151,7 @@ export default function Revisao({ concursos }) {
             </div>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 4 }}>
               <button className="btn btn-ghost" onClick={() => setModal(false)}>Cancelar</button>
-              <button className="btn btn-primary" onClick={handleAdd} disabled={saving || !form.topico || !form.concurso}>
+              <button className="btn btn-primary" onClick={handleAdd} disabled={saving || !form.topico || !form.concurso} style={{ opacity: saving ? 0.7 : 1 }}>
                 {saving ? 'Salvando...' : 'Adicionar'}
               </button>
             </div>
