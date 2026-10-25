@@ -177,7 +177,7 @@ export default function Dashboard({ concursos, onNavigate }) {
       </div>
 
       {/* Linha 3 — Progresso por matéria + Estudos hoje + Acesso rápido */}
-      <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: 12, alignItems: 'stretch' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12, alignItems: 'stretch' }}>
 
         {/* Progresso por matéria */}
         <div style={{
