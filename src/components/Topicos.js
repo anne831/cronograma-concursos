@@ -220,9 +220,9 @@ export default function Topicos({ concursos, onIrSimulado }) {
 
       {/* Modal adicionar tópico */}
       {modal && (
-        <div className="modal-backdrop" onClick={() => setModal(false)}>
+        <div className="modal-backdrop" onClick={() => setModal(false)} role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">+ Novo tópico</div>
+            <div id="modal-title" className="modal-title">+ Novo tópico</div>
             <div className="form-group">
               <label className="form-label">Tópico / conteúdo</label>
               <input className="form-input" placeholder="Ex: Princípios fundamentais da CF/88"

@@ -66,7 +66,7 @@ export default function Auth() {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             margin: '0 auto 1rem', fontSize: 22,
             boxShadow: '0 8px 24px rgba(124,111,255,0.3)'
-          }}>🎯</div>
+          }} aria-hidden="true">🎯</div>
           <h1 style={{
             fontFamily: 'var(--font-display)', fontSize: 22,
             fontWeight: 800, color: 'var(--text)', margin: 0, lineHeight: 1.3
@@ -88,7 +88,7 @@ export default function Auth() {
           boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
         }}>
           {/* Botão Google */}
-          <button onClick={loginGoogle} disabled={loading} style={{
+          <button onClick={loginGoogle} disabled={loading} type="button" aria-label="Entrar com Google" style={{
             width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
             gap: 10, padding: '11px', borderRadius: 8,
             border: '0.5px solid var(--border2)',
@@ -96,7 +96,7 @@ export default function Auth() {
             fontSize: 14, fontWeight: 500, cursor: 'pointer',
             marginBottom: 16, transition: 'var(--transition)'
           }}>
-            <svg width="18" height="18" viewBox="0 0 24 24">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
               <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
               <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
@@ -116,9 +116,9 @@ export default function Auth() {
           <div style={{
             display: 'flex', gap: 4, marginBottom: '1.25rem',
             background: 'var(--bg3)', borderRadius: 10, padding: 4
-          }}>
+          }} role="tablist" aria-label="Modo de acesso">
             {['login', 'signup'].map(m => (
-              <button key={m} onClick={() => setMode(m)} style={{
+              <button key={m} onClick={() => setMode(m)} role="tab" aria-selected={mode === m} style={{
                 flex: 1, padding: '7px', borderRadius: 8, border: 'none',
                 fontSize: 13, fontWeight: 500,
                 background: mode === m ? 'var(--surface2)' : 'transparent',
@@ -134,24 +134,24 @@ export default function Auth() {
           <form onSubmit={submit}>
             {mode === 'signup' && (
               <div className="form-group">
-                <label className="form-label">Nome completo</label>
-                <input name="name" value={form.name} onChange={handle} required
+                <label className="form-label" htmlFor="name">Nome completo</label>
+                <input id="name" name="name" value={form.name} onChange={handle} required
                   className="form-input" placeholder="Seu nome" />
               </div>
             )}
             <div className="form-group">
-              <label className="form-label">E-mail</label>
-              <input name="email" type="email" value={form.email} onChange={handle} required
+              <label className="form-label" htmlFor="email">E-mail</label>
+              <input id="email" name="email" type="email" value={form.email} onChange={handle} required
                 className="form-input" placeholder="seu@email.com" />
             </div>
             <div className="form-group">
-              <label className="form-label">Senha</label>
-              <input name="password" type="password" value={form.password} onChange={handle} required
+              <label className="form-label" htmlFor="password">Senha</label>
+              <input id="password" name="password" type="password" value={form.password} onChange={handle} required
                 className="form-input" placeholder="••••••••" minLength={6} />
             </div>
 
             {error && (
-              <div style={{
+              <div role="alert" aria-live="assertive" style={{
                 background: 'var(--red-soft)',
                 border: '0.5px solid rgba(248,113,113,0.2)',
                 borderRadius: 8, padding: '10px 14px',

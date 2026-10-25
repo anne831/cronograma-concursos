@@ -23,12 +23,12 @@ export default function Sidebar({ active, onChange }) {
         borderRight: '0.5px solid var(--border)', height: '100vh',
         display: 'flex', flexDirection: 'column', alignItems: 'center',
         position: 'sticky', top: 0, padding: '12px 0'
-      }} className="hide-mobile">
+      }} className="hide-mobile" aria-label="Menu principal">
 
         {/* Logo */}
-        <div style={{ fontSize: 22, marginBottom: 16 }}>🎯</div>
+        <div style={{ fontSize: 22, marginBottom: 16 }} aria-hidden="true">🎯</div>
 
-        <div style={{ width: '100%', height: '0.5px', background: 'var(--border)', marginBottom: 8 }} />
+        <div style={{ width: '100%', height: '0.5px', background: 'var(--border)', marginBottom: 8 }} aria-hidden="true" />
 
         {/* Nav ícones */}
         <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, width: '100%', padding: '4px' }}>
@@ -36,6 +36,8 @@ export default function Sidebar({ active, onChange }) {
             <button key={item.id} onClick={() => onChange(item.id)}
               title={item.label}
               className="nav-btn"
+              aria-label={item.label}
+              aria-current={active === item.id ? 'page' : undefined}
               style={{
                 width: 44, height: 44, borderRadius: 10, border: 'none',
                 background: active === item.id ? 'var(--accent-soft)' : 'transparent',
@@ -50,7 +52,7 @@ export default function Sidebar({ active, onChange }) {
           ))}
         </nav>
 
-        <div style={{ width: '100%', height: '0.5px', background: 'var(--border)', marginBottom: 8 }} />
+        <div style={{ width: '100%', height: '0.5px', background: 'var(--border)', marginBottom: 8 }} aria-hidden="true" />
 
         {/* Avatar + Sair */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
@@ -59,10 +61,10 @@ export default function Sidebar({ active, onChange }) {
             background: 'var(--accent-soft)', border: '0.5px solid rgba(124,111,255,0.3)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             fontSize: 12, fontWeight: 700, color: 'var(--accent2)'
-          }}>
+          }} aria-label={user?.displayName || user?.email}>
             {user?.displayName?.[0]?.toUpperCase() || user?.email?.[0]?.toUpperCase() || '?'}
           </div>
-          <button onClick={logout} title="Sair" style={{
+          <button onClick={logout} title="Sair" aria-label="Sair da conta" style={{
             width: 32, height: 32, borderRadius: 8, border: '0.5px solid var(--border2)',
             background: 'transparent', cursor: 'pointer', color: 'var(--text2)',
             display: 'flex', alignItems: 'center', justifyContent: 'center'
@@ -78,9 +80,9 @@ export default function Sidebar({ active, onChange }) {
         background: 'var(--bg2)', borderBottom: '0.5px solid var(--border)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-around',
         padding: '8px 6px',
-      }} className="show-mobile">
+      }} className="show-mobile" aria-label="Menu de navegação">
         {navItems.map(item => (
-          <button key={item.id} onClick={() => onChange(item.id)} style={{
+          <button key={item.id} onClick={() => onChange(item.id)} aria-label={item.label} aria-current={active === item.id ? 'page' : undefined} style={{
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
             padding: active === item.id ? '5px 12px' : '5px 8px',
             border: 'none',

@@ -160,9 +160,9 @@ export default function Anotacoes({ concursos = [] }) {
 
       {/* Modal nova/editar */}
       {modal && (
-        <div className="modal-backdrop" onClick={fecharModal}>
+        <div className="modal-backdrop" onClick={fecharModal} role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <div className="modal" style={{ maxWidth: 560 }} onClick={e => e.stopPropagation()}>
-            <div className="modal-title">{editId ? '✏️ Editar anotação' : '📓 Nova anotação'}</div>
+            <div id="modal-title" className="modal-title">{editId ? '✏️ Editar anotação' : '📓 Nova anotação'}</div>
 
             <div className="grid-2">
               <div className="form-group">

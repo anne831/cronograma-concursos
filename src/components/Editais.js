@@ -195,9 +195,9 @@ export default function Editais({ onImportarMaterias }) {
 
       {/* Modal matérias extraídas */}
       {modal && (
-        <div className="modal-backdrop" onClick={() => setModal(false)}>
+        <div className="modal-backdrop" onClick={() => setModal(false)} role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <div className="modal" style={{ maxWidth: 520 }} onClick={e => e.stopPropagation()}>
-            <div className="modal-title">📄 Matérias identificadas</div>
+            <div id="modal-title" className="modal-title">📄 Matérias identificadas</div>
             <div className="form-group">
               <label className="form-label">Nome do concurso</label>
               <input className="form-input" value={concursoNome}

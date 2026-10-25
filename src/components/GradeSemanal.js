@@ -129,7 +129,7 @@ export default function GradeSemanal({ concursos }) {
                         </div>
                         <div style={{ fontSize: 10, color: 'var(--text3)' }}>{s.hora} · {s.duracao}h</div>
                       </div>
-                      <button onClick={() => deleteSessao(s.id)} style={{
+                      <button onClick={() => deleteSessao(s.id)} aria-label={`Excluir sessão de ${m.label}`} style={{
                         background: 'none', border: 'none', color: 'var(--text3)',
                         fontSize: 14, cursor: 'pointer', padding: '0 2px', lineHeight: 1
                       }}>×</button>
@@ -138,7 +138,7 @@ export default function GradeSemanal({ concursos }) {
                 })}
 
                 {/* Botão adicionar */}
-                <button onClick={() => setModal(dia)} style={{
+                <button onClick={() => setModal(dia)} aria-label={`Adicionar sessão em ${DIAS[dia.getDay()]}`} style={{
                   width: '100%', padding: '5px', border: '0.5px dashed var(--border2)',
                   borderRadius: 6, background: 'transparent', color: 'var(--text3)',
                   fontSize: 11, cursor: 'pointer', marginTop: sessoesDia.length > 0 ? 4 : 0
@@ -151,9 +151,9 @@ export default function GradeSemanal({ concursos }) {
 
       {/* Modal */}
       {modal && (
-        <div className="modal-backdrop" onClick={() => setModal(null)}>
+        <div className="modal-backdrop" onClick={() => setModal(null)} role="dialog" aria-modal="true" aria-labelledby="modal-title-grade">
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div className="modal-title">+ Nova sessão</div>
+            <div id="modal-title-grade" className="modal-title">+ Nova sessão</div>
             <div style={{ fontSize: 13, color: 'var(--text2)', marginBottom: '1rem' }}>
               {DIAS[modal.getDay()]} · {format(modal, 'dd/MM')}
             </div>

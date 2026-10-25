@@ -362,9 +362,9 @@ export default function Concursos() {
 
       {/* Modal */}
       {modal && (
-        <div className="modal-backdrop" onClick={fecharModal}>
+        <div className="modal-backdrop" onClick={fecharModal} role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <div className="modal" style={{ maxWidth: 520 }} onClick={e => e.stopPropagation()}>
-            <div className="modal-title">{editId ? '✏️ Editar concurso' : '🏛️ Novo concurso'}</div>
+            <div id="modal-title" className="modal-title">{editId ? '✏️ Editar concurso' : '🏛️ Novo concurso'}</div>
 
             {/* Importar edital + matérias */}
             <div style={{

@@ -61,7 +61,7 @@ function AppContent() {
       <div className="hide-mobile">
         <Sidebar active={view} onChange={navegar} />
       </div>
-      <main style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '2rem', width: '100%', minWidth: 0, height: '100vh' }}>
+      <main id="main" style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '2rem', width: '100%', minWidth: 0, height: '100vh' }}>
         {views[view]}
       </main>
 
@@ -89,6 +89,7 @@ export default function App() {
   return (
     <AuthProvider>
       <AppContent />
+      <a href="#main" className="skip-link">Pular para o conteúdo</a>
     </AuthProvider>
   );
 }

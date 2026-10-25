@@ -472,9 +472,9 @@ export default function Simulado({ concursos = [], alvo = null }) {
 
       {/* ───── MODAL: nova/editar questão ───── */}
       {modal && (
-        <div className="modal-backdrop" onClick={() => setModal(false)}>
+        <div className="modal-backdrop" onClick={() => setModal(false)} role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <div className="modal" style={{ maxWidth: 560 }} onClick={e => e.stopPropagation()}>
-            <div className="modal-title">{editId ? 'Editar questão' : '+ Nova questão'}</div>
+            <div id="modal-title" className="modal-title">{editId ? 'Editar questão' : '+ Nova questão'}</div>
 
             <div className="grid-2">
               <div className="form-group">
