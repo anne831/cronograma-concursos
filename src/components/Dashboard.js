@@ -3,12 +3,14 @@ import { useAuth } from '../contexts/AuthContext';
 import { getSessoes, getRevisoes, getTopicos } from '../firebase/services';
 import { format, differenceInDays, parseISO, startOfWeek, subDays } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import ExportarDados from './ExportarDados';
 
 export default function Dashboard({ concursos, onNavigate }) {
   const { user } = useAuth();
   const [sessoes, setSessoes] = useState([]);
   const [revisoes, setRevisoes] = useState([]);
   const [topicos, setTopicos] = useState([]);
+  const [showExport, setShowExport] = useState(false);
 
   useEffect(() => {
     if (!user) return;
@@ -128,8 +130,18 @@ export default function Dashboard({ concursos, onNavigate }) {
           borderRadius: 12, padding: '14px 16px',
           display: 'flex', flexDirection: 'column', justifyContent: 'space-between'
         }}>
-          <div style={{ fontSize: 11, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 12 }}>
-            Horas estudadas — últimos 7 dias
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+            <div style={{ fontSize: 11, color: 'var(--text3)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              Horas estudadas — últimos 7 dias
+            </div>
+            <button
+              onClick={() => setShowExport(true)}
+              className="btn btn-ghost btn-sm"
+              aria-label="Exportar dados"
+              title="Exportar dados"
+            >
+              📥 Exportar
+            </button>
           </div>
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, height: 70 }}>
             {ultimos7.map((d, i) => (
@@ -230,6 +242,9 @@ export default function Dashboard({ concursos, onNavigate }) {
           </div>
         </div>
       </div>
+
+      {/* Modal de exportação */}
+      {showExport && <ExportarDados onClose={() => setShowExport(false)} />}
     </div>
   );
 }
