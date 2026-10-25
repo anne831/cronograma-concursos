@@ -21,7 +21,6 @@ function AppContent() {
   const [simuladoAlvo, setSimuladoAlvo] = useState(null);
   const [tema, setTema] = useState(() => localStorage.getItem('tema') || 'dark');
 
-  // Aplica o tema no app inteiro e salva a preferência
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', tema);
     localStorage.setItem('tema', tema);
@@ -36,10 +35,8 @@ function AppContent() {
 
   if (!user) return <Auth />;
 
-  // Navegação normal (menu / acesso rápido): limpa qualquer alvo de simulado pendente
   const navegar = (v) => { setSimuladoAlvo(null); setView(v); };
 
-  // Deep-link: vai pro Simulado já com a matéria escolhida
   const irParaSimulado = (concurso, materia) => {
     setSimuladoAlvo({ concurso, materia });
     setView('simulado');
@@ -56,6 +53,9 @@ function AppContent() {
   };
 
   return (
+    <div style={{ display: 'flex', minHeight: '100vh' }}>
+      <Notificacoes />
+
       {view !== 'dashboard' && (
         <button
           onClick={() => navegar('dashboard')}
@@ -70,9 +70,8 @@ function AppContent() {
         >
           ← Voltar
         </button>
-      )
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <Notificacoes />
+      )}
+
       <div className="hide-mobile">
         <Sidebar active={view} onChange={navegar} />
       </div>
@@ -80,7 +79,6 @@ function AppContent() {
         {views[view]}
       </main>
 
-      {/* Botão flutuante de tema (claro/escuro) */}
       <button
         onClick={alternarTema}
         title={tema === 'dark' ? 'Mudar para tema claro' : 'Mudar para tema escuro'}
