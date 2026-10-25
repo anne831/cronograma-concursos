@@ -135,7 +135,7 @@ export default function Auth() {
             {mode === 'signup' && (
               <div className="form-group">
                 <label className="form-label" htmlFor="name">Nome completo</label>
-                <input id="name" name="name" value={form.name} onChange={handle} required
+                <input tabindex="0" id="name" name="name" value={form.name} onChange={handle} required
                   className="form-input" placeholder="Seu nome" />
               </div>
             )}

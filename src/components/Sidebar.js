@@ -31,7 +31,7 @@ export default function Sidebar({ active, onChange }) {
         <div style={{ width: '100%', height: '0.5px', background: 'var(--border)', marginBottom: 8 }} aria-hidden="true" />
 
         {/* Nav ícones */}
-        <nav style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, width: '100%', padding: '4px' }}>
+        <nav role="navigation" aria-label="Menu principal" style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4, width: '100%', padding: '4px' }}>
           {navItems.map(item => (
             <button key={item.id} onClick={() => onChange(item.id)}
               title={item.label}
