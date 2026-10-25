@@ -56,6 +56,21 @@ function AppContent() {
   };
 
   return (
+      {view !== 'dashboard' && (
+        <button
+          onClick={() => navegar('dashboard')}
+          aria-label="Voltar para o dashboard"
+          style={{
+            position: 'fixed', top: 16, left: 16, zIndex: 55,
+            background: 'var(--surface)', color: 'var(--text2)',
+            border: '0.5px solid var(--border)', borderRadius: 10,
+            padding: '6px 12px', fontSize: 13, cursor: 'pointer',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.25)', display: 'flex', alignItems: 'center', gap: 6
+          }}
+        >
+          ← Voltar
+        </button>
+      )
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       <Notificacoes />
       <div className="hide-mobile">
