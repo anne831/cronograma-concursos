@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import useFeedback from '../hooks/useFeedback';
 import { getRevisoes, addRevisao, concluirRevisao } from '../firebase/services';
 import { differenceInDays, parseISO } from 'date-fns';
 
 export default function Revisao({ concursos }) {
-  const { loading, withLoading } = useFeedback();
   const { user } = useAuth();
   const [revisoes, setRevisoes] = useState([]);
   const [modal, setModal] = useState(false);

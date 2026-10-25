@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import useFeedback from '../hooks/useFeedback';
 import { addTopico, toggleTopico, deleteTopico } from '../firebase/services';
 import { TOPICOS_TJCE } from './TopicosIniciais';
 import { onSnapshot, collection, query, where } from 'firebase/firestore';
