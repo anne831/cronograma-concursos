@@ -85,7 +85,7 @@ export default function Dashboard({ concursos, onNavigate }) {
       </div>
 
       {/* Linha 1 — Métricas principais */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12, marginBottom: 12 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginBottom: 12 }}>
         {[
           { label: 'Horas hoje', val: horasHoje.toFixed(1) + 'h', icon: '⏱️', color: 'var(--accent2)', action: 'grade' },
           { label: 'Horas semana', val: horasSemana.toFixed(1) + 'h', icon: '📈', color: 'var(--green)', action: 'grade' },
@@ -177,7 +177,7 @@ export default function Dashboard({ concursos, onNavigate }) {
       </div>
 
       {/* Linha 3 — Progresso por matéria + Estudos hoje + Acesso rápido */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 12, alignItems: 'stretch' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12, alignItems: 'stretch' }}>
 
         {/* Progresso por matéria */}
         <div style={{
