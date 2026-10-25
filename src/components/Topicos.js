@@ -162,9 +162,9 @@ export default function Topicos({ concursos, onIrSimulado }) {
       }}>
         {lista.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text3)' }}>
-            <div style={{ fontSize: 36, marginBottom: 10 }}>✅</div>
-            <div style={{ fontSize: 14, color: 'var(--text2)' }}>Nenhum tópico encontrado</div>
-            <div style={{ fontSize: 12, marginTop: 4 }}>
+            <div style={{ fontSize: 36, marginBottom: 10 }} aria-hidden="true">✅</div>
+            <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 600 }}>Nenhum tópico encontrado</div>
+            <div style={{ fontSize: 12, color: 'var(--text2)', marginTop: 4 }}>
               {topicos.length === 0 ? 'Clique em "Importar TJ-CE" para começar!' : 'Tente mudar os filtros'}
             </div>
           </div>

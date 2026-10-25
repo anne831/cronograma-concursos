@@ -270,10 +270,10 @@ export default function Concursos() {
 
       {/* Lista */}
       {concursos.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '4rem 2rem', color: 'var(--text3)' }}>
+        <div style={{ textAlign: 'center', padding: '4rem 2rem', color: 'var(--text3)' }} role="status" aria-live="polite"
           <div style={{ fontSize: 48, marginBottom: 12 }}>🏛️</div>
-          <div style={{ fontSize: 16, color: 'var(--text2)', marginBottom: 6 }}>Nenhum concurso cadastrado</div>
-          <div style={{ fontSize: 13 }}>Comece cadastrando os concursos que está estudando</div>
+          <div style={{ fontSize: 16, color: 'var(--text)', fontWeight: 600, marginBottom: 6 }}>Nenhum concurso cadastrado</div>
+          <div style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 16 }}>Comece cadastrando os concursos que está estudando</div>
           <button className="btn btn-primary" onClick={abrirNovo} style={{ marginTop: 20 }}>
             + Cadastrar primeiro concurso
           </button>
@@ -296,13 +296,13 @@ export default function Concursos() {
                     {c.orgao && <div style={{ fontSize: 12, color: 'var(--text2)', marginTop: 2 }}>{c.orgao}</div>}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
-                    <button onClick={() => abrirEdicao(c)} title="Editar" style={{
-                      background: 'none', border: 'none', color: 'var(--text3)',
+                    <button onClick={() => abrirEdicao(c)} title="Editar" aria-label={`Editar ${c.nome}`} style={{
+                      background: 'transparent', border: '0.5px solid var(--border)', color: 'var(--text2)',
                       cursor: 'pointer', padding: '2px 4px', display: 'flex', alignItems: 'center'
                     }}><Pencil size={15} /></button>
-                    <button onClick={() => deleteConcurso(c.id)} title="Excluir" style={{
-                      background: 'none', border: 'none', color: 'var(--text3)',
-                      fontSize: 18, cursor: 'pointer', padding: '0 4px', lineHeight: 1
+                    <button onClick={() => deleteConcurso(c.id)} title="Excluir" aria-label={`Excluir ${c.nome}`} style={{
+                      background: 'transparent', border: '0.5px solid var(--border)', color: 'var(--text2)',
+                      fontSize: 18, cursor: 'pointer', padding: '2px 6px', lineHeight: 1, borderRadius: 6
                     }}>×</button>
                   </div>
                 </div>
