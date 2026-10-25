@@ -13,6 +13,7 @@ import Simulado from './components/Simulado';
 import Concursos from './components/Concursos';
 import Notificacoes from './components/Notificacoes';
 import OfflineBanner from './components/OfflineBanner';
+import Toast from './components/Toast';
 import './styles/global.css';
 
 function AppContent() {
@@ -56,6 +57,7 @@ function AppContent() {
   return (
     <div style={{ display: 'flex', minHeight: '100vh' }}>
       <OfflineBanner />
+      <Toast />
       <Notificacoes />
 
       {view !== 'dashboard' && (
