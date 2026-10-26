@@ -120,6 +120,7 @@ export default function Sidebar({ active, onChange, onBack }) {
             {item.label.split(' ')[0]}
           </button>
         ))}
+        </div>
       </nav>
     </>
   );
