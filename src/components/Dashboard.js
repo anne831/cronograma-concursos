@@ -155,24 +155,33 @@ export default function Dashboard({ concursos, onNavigate }) {
               📥 Exportar
             </button>
           </div>
-          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, height: 70 }}>
-            {ultimos7.map((d, i) => (
-              <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                <div style={{ fontSize: 10, color: 'var(--text3)', minHeight: 12 }}>
-                  {d.horas > 0 ? d.horas.toFixed(1) : ''}
+          {ultimos7.some(d => d.horas > 0) ? (
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 8, height: 70 }}>
+              {ultimos7.map((d, i) => (
+                <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                  <div style={{ fontSize: 10, color: 'var(--text3)', minHeight: 12 }}>
+                    {d.horas > 0 ? d.horas.toFixed(1) : ''}
+                  </div>
+                  <div style={{
+                    width: '100%', borderRadius: 4,
+                    height: Math.max(d.horas / maxHoras * 45, d.horas > 0 ? 4 : 2),
+                    background: d.isHoje ? 'var(--accent)' : d.horas > 0 ? 'rgba(124,111,255,0.35)' : 'var(--bg3)',
+                    transition: 'height 0.4s ease'
+                  }} />
+                  <div style={{ fontSize: 10, color: d.isHoje ? 'var(--accent2)' : 'var(--text3)', fontWeight: d.isHoje ? 600 : 400 }}>
+                    {d.label}
+                  </div>
                 </div>
-                <div style={{
-                  width: '100%', borderRadius: 4,
-                  height: Math.max(d.horas / maxHoras * 45, d.horas > 0 ? 4 : 2),
-                  background: d.isHoje ? 'var(--accent)' : d.horas > 0 ? 'rgba(124,111,255,0.35)' : 'var(--bg3)',
-                  transition: 'height 0.4s ease'
-                }} />
-                <div style={{ fontSize: 10, color: d.isHoje ? 'var(--accent2)' : 'var(--text3)', fontWeight: d.isHoje ? 600 : 400 }}>
-                  {d.label}
-                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 70, gap: 6 }}>
+              <div style={{ fontSize: 22 }} aria-hidden="true">📊</div>
+              <div style={{ fontSize: 12, color: 'var(--text2)', textAlign: 'center' }}>
+                Comece a registrar suas sessões de estudo
               </div>
-            ))}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
