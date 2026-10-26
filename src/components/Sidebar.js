@@ -93,13 +93,13 @@ export default function Sidebar({ active, onChange, onBack }) {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '8px 10px',
       }} className="show-mobile" aria-label="Menu de navegação">
-        {/* Debug: onBack = {onBack ? 'TRUE' : 'FALSE'} */}
         {onBack && (
           <button onClick={onBack} title="Voltar" aria-label="Voltar para o dashboard" style={{
             width: 36, height: 36, borderRadius: 10, border: 'none',
-            background: 'var(--accent-soft)', color: 'var(--accent2)',
+            background: '#7c6fff', color: '#fff',
             cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0, transition: 'all 0.18s ease'
+            flexShrink: 0, transition: 'all 0.18s ease',
+            boxShadow: '0 2px 8px rgba(124,111,255,0.4)'
           }}>
             <span style={{ display: 'inline-block', transition: 'transform 0.2s' }}>←</span>
           </button>
