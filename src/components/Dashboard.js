@@ -186,7 +186,7 @@ export default function Dashboard({ concursos, onNavigate }) {
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: 70, gap: 6 }}>
-              <div style={{ fontSize: 22 }} aria-hidden="true">📊</div>
+              <div style={{ fontSize: 22, animation: 'bounce 2s ease-in-out infinite' }} aria-hidden="true">📊</div>
               <div style={{ fontSize: 12, color: 'var(--text2)', textAlign: 'center' }}>
                 Comece a registrar suas sessões de estudo
               </div>
