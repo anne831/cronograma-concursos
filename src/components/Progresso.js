@@ -56,7 +56,7 @@ export default function Progresso() {
           { label: 'Este mês', val: horasMes.toFixed(1) + 'h', sub: 'Meta: 100h', pct: Math.min(horasMes / 100 * 100, 100) },
           { label: 'Total acumulado', val: horasTotal.toFixed(1) + 'h', sub: sessoes.length + ' sessões', pct: null },
         ].map((c, i) => (
-          <div key={i} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '1rem 1.25rem' }}>
+          <div key={i} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 14, padding: '1rem 1.25rem', transition: 'all 0.18s ease' }} className="card-hover">
             <div style={{ fontSize: 12, color: 'var(--text2)', marginBottom: 4 }}>{c.label}</div>
             <div style={{ fontSize: 26, fontWeight: 700, fontFamily: 'var(--font-display)', color: 'var(--text)' }}>{c.val}</div>
             <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>{c.sub}</div>
