@@ -90,10 +90,21 @@ export default function Sidebar({ active, onChange, onBack }) {
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
         background: 'var(--bg2)', borderBottom: '0.5px solid var(--border)',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-around',
-        padding: '8px 6px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '8px 10px',
       }} className="show-mobile" aria-label="Menu de navegação">
-        {navItems.map(item => (
+        {onBack && (
+          <button onClick={onBack} title="Voltar" aria-label="Voltar para o dashboard" style={{
+            width: 36, height: 36, borderRadius: 10, border: 'none',
+            background: 'var(--accent-soft)', color: 'var(--accent2)',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0, transition: 'all 0.18s ease'
+          }}>
+            <span style={{ display: 'inline-block', transition: 'transform 0.2s' }}>←</span>
+          </button>
+        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4, overflowX: 'auto', flex: 1, justifyContent: 'center' }}>
+          {navItems.map(item => (
           <button key={item.id} onClick={() => onChange(item.id)} aria-label={item.label} aria-current={active === item.id ? 'page' : undefined} style={{
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
             padding: active === item.id ? '5px 12px' : '5px 8px',
