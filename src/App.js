@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard';
 import OfflineBanner from './components/OfflineBanner';
 import Toast from './components/Toast';
 import Loading from './components/Loading';
+import Notificacoes from './components/Notificacoes';
 import './styles/global.css';
 
 const GradeSemanal = lazy(() => import('./components/GradeSemanal'));
