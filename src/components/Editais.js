@@ -177,7 +177,7 @@ export default function Editais({ onImportarMaterias }) {
               </div>
               {e.texto && (
                 <details style={{ fontSize: 12, color: 'var(--text3)' }}>
-                  <summary style={{ cursor: 'pointer', color: 'var(--accent2)' }}>Ver trecho do edital</summary>
+                  <summary style={{ cursor: 'pointer', color: 'var(--accent2)', transition: 'all 0.18s ease' }}>Ver trecho do edital</summary>
                   <div style={{
                     marginTop: 8, padding: 10, background: 'var(--bg3)',
                     borderRadius: 6, maxHeight: 200, overflowY: 'auto',

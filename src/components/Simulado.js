@@ -518,7 +518,7 @@ export default function Simulado({ concursos = [], alvo = null }) {
                   <input className="form-input" placeholder={`Alternativa ${LETRAS[i]}`}
                     value={alt} onChange={e => setAlt(i, e.target.value)} style={{ flex: 1 }} />
                   {form.alternativas.length > 2 && (
-                    <button onClick={() => removerAlt(i)} style={{ background: 'none', border: 'none', color: 'var(--text3)', fontSize: 18, cursor: 'pointer', padding: '0 4px' }}>×</button>
+                    <button onClick={() => removerAlt(i)} style={{ background: 'none', border: 'none', color: 'var(--text3)', fontSize: 18, cursor: 'pointer', padding: '0 4px', transition: 'all 0.18s ease' }}>×</button>
                   )}
                 </div>
               ))}
