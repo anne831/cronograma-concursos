@@ -296,7 +296,8 @@ export default function Simulado({ concursos = [], alvo = null }) {
                 padding: '11px 14px', borderRadius: 8, marginBottom: 8, cursor: 'pointer',
                 border: `0.5px solid ${sel ? 'var(--accent)' : 'var(--border2)'}`,
                 background: sel ? 'var(--accent-soft)' : 'transparent',
-                color: sel ? 'var(--text)' : 'var(--text2)', fontSize: 14
+                color: sel ? 'var(--text)' : 'var(--text2)', fontSize: 14,
+                transition: 'background 0.15s ease, border-color 0.15s ease, transform 0.1s ease'
               }}>
                 <span style={{ fontWeight: 600, color: sel ? 'var(--accent2)' : 'var(--text3)' }}>{LETRAS[ai]})</span>
                 <span>{alt}</span>
