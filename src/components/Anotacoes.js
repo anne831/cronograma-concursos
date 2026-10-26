@@ -130,8 +130,8 @@ export default function Anotacoes({ concursos = [] }) {
                   {a.concurso && <span style={{ fontSize: 10, color: 'var(--text3)' }}>{a.concurso}</span>}
                 </div>
                 <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
-                  <button onClick={() => abrirEdicao(a)} title="Editar" style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: 2, display: 'flex' }}><Pencil size={15} /></button>
-                  <button onClick={() => deleteAnotacao(a.id)} title="Excluir" style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: 2, display: 'flex' }}><Trash2 size={15} /></button>
+                  <button onClick={() => abrirEdicao(a)} className="btn btn-icon" aria-label="Editar anotação" title="Editar" style={{ padding: 4 }}><Pencil size={14} /></button>
+                  <button onClick={() => deleteAnotacao(a.id)} className="btn btn-icon btn-danger" aria-label="Excluir anotação" title="Excluir" style={{ padding: 4 }}><Trash2 size={14} /></button>
                 </div>
               </div>
 
