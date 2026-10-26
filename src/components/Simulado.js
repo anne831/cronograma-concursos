@@ -523,7 +523,7 @@ export default function Simulado({ concursos = [], alvo = null }) {
                 </div>
               ))}
               {form.alternativas.length < 6 && (
-                <button className="btn btn-ghost btn-sm" onClick={addAlt} style={{ marginTop: 4 }}>+ Adicionar alternativa</button>
+                <button className="btn btn-ghost btn-sm" onClick={addAlt} style={{ marginTop: 4, transition: 'all 0.18s ease' }}>+ Adicionar alternativa</button>
               )}
             </div>
 
