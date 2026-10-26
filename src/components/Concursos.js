@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getConcursos, addConcurso, updateConcurso, deleteConcurso, addTopico } from '../firebase/services';
 import { format } from 'date-fns';
-import { Pencil } from 'lucide-react';
+import { Pencil, Trash2 } from 'lucide-react';
 
 const CORES = ['#6c63ff','#22d3a0','#f87171','#fbbf24','#60a5fa','#f472b6'];
 
