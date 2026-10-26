@@ -269,7 +269,7 @@ export default function Dashboard({ concursos, onNavigate }) {
                 borderRadius: 8, padding: '10px 12px', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 10, width: '100%',
                 transition: 'all 0.18s ease'
-              }} className="card-hover">
+              }} className="card-hover" aria-label={`Acesso rápido: ${item.label}`}>
                 <span style={{ fontSize: 14 }}>{item.icon}</span>
                 <span style={{ fontSize: 12, color: 'var(--text2)' }}>{item.label}</span>
               </button>
