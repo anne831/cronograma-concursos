@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getSessoes, addSessao, deleteSessao } from '../firebase/services';
-import { format, startOfWeek, addDays } from 'date-fns';
+import { format, startOfWeek, addDays } from '../utils/date';
 import { ptBR } from 'date-fns/locale';
 
 const MATERIAS = [

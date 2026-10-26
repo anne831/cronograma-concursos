@@ -4,7 +4,7 @@ import {
   getQuestoes, addQuestao, updateQuestao, deleteQuestao,
   getResultados, addResultado, deleteResultado
 } from '../firebase/services';
-import { format } from 'date-fns';
+import { format } from '../utils/date';
 import { Pencil, Trash2, CheckCircle2, XCircle } from 'lucide-react';
 
 const LETRAS = ['A', 'B', 'C', 'D', 'E', 'F'];

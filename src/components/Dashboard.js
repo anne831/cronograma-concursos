@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getSessoes, getRevisoes, getTopicos } from '../firebase/services';
-import { format, differenceInDays, parseISO, startOfWeek, subDays } from 'date-fns';
+import { format, differenceInDays, parseISO, startOfWeek, subDays } from '../utils/date';
 import { ptBR } from 'date-fns/locale';
 import ExportarDados from './ExportarDados';
 

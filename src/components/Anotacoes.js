@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getAnotacoes, addAnotacao, updateAnotacao, deleteAnotacao } from '../firebase/services';
-import { format } from 'date-fns';
+import { format } from '../utils/date';
 import { Pencil, Trash2 } from 'lucide-react';
 
 const FORM_VAZIO = { concurso: '', materia: '', titulo: '', conteudo: '' };

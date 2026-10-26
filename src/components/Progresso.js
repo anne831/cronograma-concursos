@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getSessoes } from '../firebase/services';
-import { format, startOfWeek, subDays } from 'date-fns';
+import { format, startOfWeek, subDays } from '../utils/date';
 
 const MATERIAS = [
   { value: 'dir_const', label: 'Dir. Constitucional', color: '#60a5fa' },

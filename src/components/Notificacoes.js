@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getRevisoes } from '../firebase/services';
-import { differenceInDays, parseISO } from 'date-fns';
+import { differenceInDays, parseISO } from '../utils/date';
 
 export default function Notificacoes() {
   const { user } = useAuth();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { getRevisoes, addRevisao, concluirRevisao } from '../firebase/services';
-import { differenceInDays, parseISO } from 'date-fns';
+import { differenceInDays, parseISO } from '../utils/date';
 
 export default function Revisao({ concursos }) {
   const { user } = useAuth();
