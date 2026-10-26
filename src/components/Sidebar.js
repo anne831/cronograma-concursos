@@ -12,7 +12,7 @@ const navItems = [
   { id: 'concursos', icon: <Building2 size={20} />, label: 'Concursos' },
 ];
 
-export default function Sidebar({ active, onChange }) {
+export default function Sidebar({ active, onChange, onBack }) {
   const { user, logout } = useAuth();
 
   return (
@@ -27,6 +27,18 @@ export default function Sidebar({ active, onChange }) {
 
         {/* Logo */}
         <div style={{ fontSize: 22, marginBottom: 16 }} aria-hidden="true">🎯</div>
+
+        {/* Botão voltar quando não é dashboard */}
+        {onBack && (
+          <button onClick={onBack} title="Voltar" aria-label="Voltar para o dashboard" style={{
+            width: 44, height: 44, borderRadius: 10, border: 'none',
+            background: 'var(--accent-soft)', color: 'var(--accent2)',
+            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            marginBottom: 8, transition: 'all 0.18s ease'
+          }}>
+            <span style={{ display: 'inline-block', transition: 'transform 0.2s' }}>←</span>
+          </button>
+        )}
 
         <div style={{ width: '100%', height: '0.5px', background: 'var(--border)', marginBottom: 8 }} aria-hidden="true" />
 

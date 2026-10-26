@@ -60,24 +60,10 @@ function AppContent() {
       <Toast />
       <Notificacoes />
 
-      {view !== 'dashboard' && (
-        <button
-          onClick={() => navegar('dashboard')}
-          aria-label="Voltar para o dashboard"
-          style={{
-            position: 'fixed', top: 16, left: 16, zIndex: 55,
-            background: 'var(--surface)', color: 'var(--text2)',
-            border: '0.5px solid var(--border)', borderRadius: 10,
-            padding: '6px 12px', fontSize: 13, cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.25)', display: 'flex', alignItems: 'center', gap: 6
-          }}
-        >
-          ← Voltar
-        </button>
-      )}
+
 
       <div className="hide-mobile">
-        <Sidebar active={view} onChange={navegar} />
+        <Sidebar active={view} onChange={navegar} onBack={view !== 'dashboard' ? () => navegar('dashboard') : undefined} />
       </div>
       <main id="main" role="main" style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '2rem', width: '100%', minWidth: 0, height: '100vh' }}>
         {views[view]}
