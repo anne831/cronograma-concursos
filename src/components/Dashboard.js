@@ -92,10 +92,10 @@ export default function Dashboard({ concursos, onNavigate }) {
       {/* Linha 1 — Métricas principais */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 12, marginBottom: 12 }}>
         {[
-          { label: 'Horas hoje', val: horasHoje.toFixed(1) + 'h', icon: '⏱️', color: 'var(--accent2)', action: 'grade' },
-          { label: 'Horas semana', val: horasSemana.toFixed(1) + 'h', icon: '📈', color: 'var(--green)', action: 'grade' },
+          { label: 'Horas hoje', val: horasHoje.toFixed(1) + 'h', sub: metaHorasHoje + 'h', pct: pctHorasHoje, icon: '⏱️', color: 'var(--accent2)', action: 'grade' },
+          { label: 'Horas semana', val: horasSemana.toFixed(1) + 'h', sub: metaHorasSemana + 'h', pct: pctHorasSemana, icon: '📈', color: 'var(--green)', action: 'grade' },
           { label: 'Revisões pendentes', val: revisoesPendentes.length, icon: '🔁', color: revisoesPendentes.length > 0 ? 'var(--amber)' : 'var(--green)', action: 'revisao' },
-          { label: 'Tópicos concluídos', val: pctTopicos + '%', icon: '✏️', color: 'var(--blue)', action: 'topicos' },
+          { label: 'Tópicos concluídos', val: pctTopicos + '%', sub: topicosFeitos + '/' + topicos.length, icon: '✏️', color: 'var(--blue)', action: 'topicos' },
         ].map((c, i) => (
           <div key={i} onClick={() => onNavigate(c.action)} style={{
             background: 'var(--surface)', border: '0.5px solid var(--border)',
