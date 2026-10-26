@@ -293,3 +293,5 @@ textarea:focus:not(:focus-visible) {
   100% { background-position: -200% 0; }
 }
 
+
+.card-hover:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); border-color: rgba(255,255,255,0.12); }
