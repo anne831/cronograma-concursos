@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { getConcursos } from './firebase/services';
 import { Sun, Moon } from 'lucide-react';
 import Auth from './components/Auth';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
-import GradeSemanal from './components/GradeSemanal';
-import Revisao from './components/Revisao';
-import Topicos from './components/Topicos';
-import Anotacoes from './components/Anotacoes';
-import Simulado from './components/Simulado';
-import Concursos from './components/Concursos';
-import Notificacoes from './components/Notificacoes';
 import OfflineBanner from './components/OfflineBanner';
 import Toast from './components/Toast';
+import Loading from './components/Loading';
 import './styles/global.css';
+
+const GradeSemanal = lazy(() => import('./components/GradeSemanal'));
+const Revisao = lazy(() => import('./components/Revisao'));
+const Topicos = lazy(() => import('./components/Topicos'));
+const Anotacoes = lazy(() => import('./components/Anotacoes'));
+const Simulado = lazy(() => import('./components/Simulado'));
+const Concursos = lazy(() => import('./components/Concursos'));
 
 function AppContent() {
   const { user } = useAuth();
