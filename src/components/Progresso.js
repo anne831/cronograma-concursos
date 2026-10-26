@@ -78,7 +78,7 @@ export default function Progresso() {
                   <div style={{ fontSize: 12, color: 'var(--text2)', textAlign: 'center' }}>Nenhuma sessão registrada ainda. Comece a estudar para ver seu progresso!</div>
                 </div></div>
           ) : porMateria.map(m => (
-            <div key={m.value} style={{ marginBottom: 12 }}>
+            <div key={m.value} style={{ marginBottom: 12, transition: 'opacity 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.opacity = '0.8'} onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 5 }}>
                 <span style={{ color: 'var(--text2)' }}>{m.label}</span>
                 <span style={{ fontWeight: 500, color: m.color }}>{m.horas.toFixed(1)}h</span>
