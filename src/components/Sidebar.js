@@ -93,6 +93,7 @@ export default function Sidebar({ active, onChange, onBack }) {
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         padding: '8px 10px',
       }} className="show-mobile" aria-label="Menu de navegação">
+        {/* Debug: onBack = {onBack ? 'TRUE' : 'FALSE'} */}
         {onBack && (
           <button onClick={onBack} title="Voltar" aria-label="Voltar para o dashboard" style={{
             width: 36, height: 36, borderRadius: 10, border: 'none',
