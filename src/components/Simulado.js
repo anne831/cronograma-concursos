@@ -415,8 +415,8 @@ export default function Simulado({ concursos = [], alvo = null }) {
                       {q.concurso && <span style={{ fontSize: 10, color: 'var(--text3)' }}>{q.concurso}</span>}
                     </div>
                     <div style={{ display: 'flex', gap: 4, flexShrink: 0 }}>
-                      <button onClick={() => abrirEdicao(q)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: 2 }} title="Editar"><Pencil size={15} /></button>
-                      <button onClick={() => deleteQuestao(q.id)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: 2 }} title="Excluir"><Trash2 size={15} /></button>
+                      <button onClick={() => abrirEdicao(q)} className="btn btn-icon" aria-label="Editar" title="Editar" style={{ padding: 4 }}><Pencil size={14} /></button>
+                      <button onClick={() => deleteQuestao(q.id)} className="btn btn-icon btn-danger" aria-label="Excluir" title="Excluir" style={{ padding: 4 }}><Trash2 size={14} /></button>
                     </div>
                   </div>
                   <div style={{ fontSize: 13, color: 'var(--text)', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
