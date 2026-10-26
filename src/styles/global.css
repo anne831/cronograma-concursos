@@ -301,3 +301,8 @@ button:disabled, .btn:disabled {
   cursor: not-allowed;
   transform: none !important;
 }
+
+input:disabled, select:disabled, textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
