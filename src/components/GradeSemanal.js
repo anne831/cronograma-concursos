@@ -74,9 +74,9 @@ export default function GradeSemanal({ concursos }) {
           </p>
         </div>
         <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
-          <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(w => w - 1)}>← Anterior</button>
-          <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(0)}>Hoje</button>
-          <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(w => w + 1)}>Próxima →</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(w => w - 1)} style={{ transition: 'all 0.18s ease' }}>← Anterior</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(0)} style={{ transition: 'all 0.18s ease' }}>Hoje</button>
+          <button className="btn btn-ghost btn-sm" onClick={() => setWeekOffset(w => w + 1)} style={{ transition: 'all 0.18s ease' }}>Próxima →</button>
         </div>
       </div>
 
