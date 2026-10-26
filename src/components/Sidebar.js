@@ -103,6 +103,7 @@ export default function Sidebar({ active, onChange, onBack }) {
             <span style={{ display: 'inline-block', transition: 'transform 0.2s' }}>←</span>
           </button>
         )}
+        {!onBack && <div style={{ width: 36, flexShrink: 0 }} />}
         <div style={{ display: 'flex', alignItems: 'center', gap: 4, overflowX: 'auto', flex: 1, justifyContent: 'center' }}>
           {navItems.map(item => (
           <button key={item.id} onClick={() => onChange(item.id)} aria-label={item.label} aria-current={active === item.id ? 'page' : undefined} style={{
