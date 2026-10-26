@@ -50,7 +50,7 @@ export default function Revisao({ concursos }) {
       {urgentes.length} pendentes · {revisoes.length} tópicos no total
     </p>
     <div style={{ marginTop: 10 }}>
-      <button className="btn btn-primary" onClick={() => setModal(true)}>+ Adicionar tópico</button>
+      <button className="btn btn-primary" onClick={() => setModal(true)} style={{ transition: 'all 0.18s ease' }}>+ Adicionar tópico</button>
     </div>
   </div>
 
@@ -152,8 +152,8 @@ export default function Revisao({ concursos }) {
               </div>
             </div>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 4 }}>
-              <button className="btn btn-ghost" onClick={() => setModal(false)}>Cancelar</button>
-              <button className="btn btn-primary" onClick={handleAdd} disabled={saving || !form.topico || !form.concurso} style={{ opacity: saving ? 0.7 : 1 }}>
+              <button className="btn btn-ghost" onClick={() => setModal(false)} style={{ transition: 'all 0.18s ease' }}>Cancelar</button>
+              <button className="btn btn-primary" onClick={handleAdd} disabled={saving || !form.topico || !form.concurso} style={{ opacity: saving ? 0.7 : 1, transition: 'all 0.18s ease' }}>
                 {saving ? 'Salvando...' : 'Adicionar'}
               </button>
             </div>
