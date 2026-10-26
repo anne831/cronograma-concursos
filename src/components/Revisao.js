@@ -87,7 +87,7 @@ export default function Revisao({ concursos }) {
                   </div>
                 </div>
                 <span className={`badge ${status.badge}`}>{status.label}</span>
-                <button className="btn btn-primary btn-sm" onClick={() => handleConcluir(r)} style={{ transition: 'all 0.18s ease' }}>
+                <button className="btn btn-primary btn-sm" onClick={() => handleConcluir(r)} style={{ transition: 'all 0.18s ease', opacity: 0.9 }}>
                   ✓ Revisei
                 </button>
               </div>
