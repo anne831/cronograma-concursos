@@ -457,7 +457,7 @@ export default function Simulado({ concursos = [], alvo = null }) {
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                         <span style={{ fontSize: 13, color: 'var(--text2)' }}>{r.acertos}/{r.total}</span>
                         <span style={{ fontFamily: 'var(--font-display)', fontSize: 18, fontWeight: 700, color: cor }}>{pct}%</span>
-                        <button onClick={() => deleteResultado(r.id)} style={{ background: 'none', border: 'none', color: 'var(--text3)', cursor: 'pointer', padding: 2 }} title="Excluir"><Trash2 size={14} /></button>
+                        <button onClick={() => deleteResultado(r.id)} className="btn btn-icon btn-danger" aria-label="Excluir resultado" title="Excluir" style={{ padding: 4 }}><Trash2 size={14} /></button>
                       </div>
                     </div>
                     <div style={{ height: 5, background: 'var(--bg3)', borderRadius: 3, overflow: 'hidden' }}>
