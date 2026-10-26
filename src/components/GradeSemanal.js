@@ -121,7 +121,8 @@ export default function GradeSemanal({ concursos }) {
                       marginBottom: 4,
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'space-between'
+                      justifyContent: 'space-between',
+                      transition: 'transform 0.12s ease, box-shadow 0.12s ease'
                     }}>
                       <div>
                         <div style={{ fontSize: 11, color: m.color, fontWeight: 600, lineHeight: 1.3 }}>
