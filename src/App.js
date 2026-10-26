@@ -47,12 +47,12 @@ function AppContent() {
 
   const views = {
     dashboard: <Dashboard concursos={concursos} onNavigate={navegar} />,
-    grade: <GradeSemanal concursos={concursos} />,
-    revisao: <Revisao concursos={concursos} />,
-    topicos: <Topicos concursos={concursos} onIrSimulado={irParaSimulado} />,
-    anotacoes: <Anotacoes concursos={concursos} />,
-    simulado: <Simulado concursos={concursos} alvo={simuladoAlvo} />,
-    concursos: <Concursos />,
+    grade: <Suspense fallback={<Loading size={24} />}><GradeSemanal concursos={concursos} /></Suspense>,
+    revisao: <Suspense fallback={<Loading size={24} />}><Revisao concursos={concursos} /></Suspense>,
+    topicos: <Suspense fallback={<Loading size={24} />}><Topicos concursos={concursos} onIrSimulado={irParaSimulado} /></Suspense>,
+    anotacoes: <Suspense fallback={<Loading size={24} />}><Anotacoes concursos={concursos} /></Suspense>,
+    simulado: <Suspense fallback={<Loading size={24} />}><Simulado concursos={concursos} alvo={simuladoAlvo} /></Suspense>,
+    concursos: <Suspense fallback={<Loading size={24} />}><Concursos /></Suspense>,
   };
 
   return (
