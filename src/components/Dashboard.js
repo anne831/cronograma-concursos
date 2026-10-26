@@ -111,6 +111,11 @@ export default function Dashboard({ concursos, onNavigate }) {
                 {loading ? '...' : c.val}
               </div>
               <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 3 }}>{c.label}</div>
+              {c.sub && (
+                <div style={{ fontSize: 10, color: 'var(--text2)', marginTop: 2 }}>
+                  {c.sub}{c.pct !== undefined ? ` · ${c.pct}% da meta` : ''}
+                </div>
+              )}
             </div>
           </div>
         ))}
