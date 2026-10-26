@@ -296,14 +296,8 @@ export default function Concursos() {
                     {c.orgao && <div style={{ fontSize: 12, color: 'var(--text2)', marginTop: 2 }}>{c.orgao}</div>}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
-                    <button onClick={() => abrirEdicao(c)} title="Editar" aria-label={`Editar ${c.nome}`} style={{
-                      background: 'transparent', border: '0.5px solid var(--border)', color: 'var(--text2)',
-                      cursor: 'pointer', padding: '2px 4px', display: 'flex', alignItems: 'center'
-                    }}><Pencil size={15} /></button>
-                    <button onClick={() => deleteConcurso(c.id)} title="Excluir" aria-label={`Excluir ${c.nome}`} style={{
-                      background: 'transparent', border: '0.5px solid var(--border)', color: 'var(--text2)',
-                      fontSize: 18, cursor: 'pointer', padding: '2px 6px', lineHeight: 1, borderRadius: 6
-                    }}>×</button>
+                    <button onClick={() => abrirEdicao(c)} className="btn btn-icon" aria-label={`Editar ${c.nome}`} title="Editar" style={{ padding: 4 }}><Pencil size={14} /></button>
+                    <button onClick={() => deleteConcurso(c.id)} className="btn btn-icon btn-danger" aria-label={`Excluir ${c.nome}`} title="Excluir" style={{ padding: 4 }}><Trash2 size={14} /></button>
                   </div>
                 </div>
 
