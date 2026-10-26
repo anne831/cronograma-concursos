@@ -103,8 +103,8 @@ export default function Dashboard({ concursos, onNavigate }) {
             display: 'flex', alignItems: 'center', gap: 14,
             opacity: loading ? 0.6 : 1,
             transform: loading ? 'translateY(6px)' : 'translateY(0)',
-            transition: 'opacity 0.3s ease, transform 0.3s ease, box-shadow 0.2s ease'
-          }} className="card-hover">
+            transition: 'opacity 0.3s ease, transform 0.3s ease, box-shadow 0.2s ease, border-color 0.2s ease'
+          }} className="card-hover" tabIndex={0} role="button" aria-label={`${c.label}: ${c.val}`}>
             {loading ? <div className="spinner" /> : <div style={{ fontSize: 24 }}>{c.icon}</div>}
             <div>
               <div style={{ fontSize: 20, fontWeight: 700, fontFamily: 'var(--font-display)', color: loading ? 'var(--text2)' : c.color, lineHeight: 1 }}>
