@@ -232,11 +232,11 @@ export default function Editais({ onImportarMaterias }) {
               ))}
             </div>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
-              <button className="btn btn-ghost" onClick={() => setModal(false)}>Cancelar</button>
-              <button className="btn btn-ghost" onClick={salvarEdital} disabled={!concursoNome}>
+              <button className="btn btn-ghost" onClick={() => setModal(false)} style={{ transition: 'all 0.18s ease' }}>Cancelar</button>
+              <button className="btn btn-ghost" onClick={salvarEdital} disabled={!concursoNome} style={{ transition: 'all 0.18s ease' }}>
                 💾 Salvar edital
               </button>
-              <button className="btn btn-primary" onClick={async () => {
+              <button className="btn btn-primary" onClick={async () => { style={{ transition: 'all 0.18s ease' }}>
                 await salvarEdital();
                 const { addTopico } = await import('../firebase/services');
                 for (const mat of selecionadas) {
