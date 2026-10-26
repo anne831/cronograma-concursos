@@ -161,6 +161,7 @@ export default function Dashboard({ concursos, onNavigate }) {
               className="btn btn-ghost btn-sm"
               aria-label="Exportar dados"
               title="Exportar dados"
+              style={{ transition: 'all 0.18s ease' }}
             >
               📥 Exportar
             </button>
