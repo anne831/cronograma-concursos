@@ -71,6 +71,11 @@ export default function Dashboard({ concursos, onNavigate }) {
   const sessoesHoje = sessoes.filter(s => s.data === hoje);
   const CORES = ['#7c6fff', '#34d399', '#60a5fa', '#fbbf24', '#f87171'];
 
+  const metaHorasHoje = 2;
+  const metaHorasSemana = 14;
+  const pctHorasHoje = Math.min(100, Math.round((horasHoje / metaHorasHoje) * 100));
+  const pctHorasSemana = Math.min(100, Math.round((horasSemana / metaHorasSemana) * 100));
+
   return (
     <div style={{ width: '100%' }}>
 
