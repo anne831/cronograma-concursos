@@ -212,7 +212,7 @@ export default function Dashboard({ concursos, onNavigate }) {
             <div key={i} style={{ marginBottom: 10 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 4 }}>
                 <span style={{ color: 'var(--text2)' }}>{m.mat}</span>
-                <span style={{ color: CORES[i % CORES.length], fontWeight: 600 }}>{m.pct}%</span>
+                <span style={{ color: CORES[i % CORES.length], fontWeight: 600 }}>{m.feitos}/{m.total} · {m.pct}%</span>
               </div>
               <div style={{ height: 5, background: 'var(--bg3)', borderRadius: 3, overflow: 'hidden' }}>
                 <div style={{ width: m.pct + '%', height: '100%', background: CORES[i % CORES.length], borderRadius: 3, transition: 'width 0.5s' }} />
