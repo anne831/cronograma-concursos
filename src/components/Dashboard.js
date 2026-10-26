@@ -266,7 +266,8 @@ export default function Dashboard({ concursos, onNavigate }) {
               <button key={i} onClick={() => onNavigate(item.action)} style={{
                 background: 'var(--bg3)', border: '0.5px solid var(--border)',
                 borderRadius: 8, padding: '7px 10px', cursor: 'pointer',
-                display: 'flex', alignItems: 'center', gap: 8, width: '100%'
+                display: 'flex', alignItems: 'center', gap: 8, width: '100%',
+                transition: 'all 0.18s ease'
               }}>
                 <span style={{ fontSize: 14 }}>{item.icon}</span>
                 <span style={{ fontSize: 12, color: 'var(--text2)' }}>{item.label}</span>
