@@ -130,10 +130,9 @@ export default function GradeSemanal({ concursos }) {
                         </div>
                         <div style={{ fontSize: 10, color: 'var(--text3)' }}>{s.hora} · {s.duracao}h</div>
                       </div>
-                      <button onClick={() => deleteSessao(s.id)} aria-label={`Excluir sessão de ${m.label}`} style={{
-                        background: 'none', border: 'none', color: 'var(--text3)',
-                        fontSize: 14, cursor: 'pointer', padding: '0 2px', lineHeight: 1
-                      }}>×</button>
+                      <button onClick={() => deleteSessao(s.id)} className="btn btn-icon btn-danger" aria-label={`Excluir sessão de ${m.label}`} title="Excluir" style={{ padding: 2 }}>
+                        <span style={{ fontSize: 14, lineHeight: 1 }}>×</span>
+                      </button>
                     </div>
                   );
                 })}
