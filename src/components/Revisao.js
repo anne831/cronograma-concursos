@@ -121,6 +121,8 @@ export default function Revisao({ concursos }) {
       {revisoes.length === 0 && (
         <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text3)' }}>
           <div style={{ fontSize: 40, marginBottom: 12 }} aria-hidden="true">🔄</div>
+          <div style={{ fontSize: 16, color: 'var(--text)', fontWeight: 600, marginBottom: 6, lineHeight: 1.4 }}>Nenhum tópico cadastrado ainda</div>
+          <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.5 }}>Adicione tópicos para começar a revisão espaçada</div>
           <div style={{ fontSize: 15, color: 'var(--text)', fontWeight: 600, marginBottom: 6 }}>Nenhum tópico cadastrado ainda</div>
           <div style={{ fontSize: 13, color: 'var(--text2)' }}>Adicione tópicos para começar a revisão espaçada</div>
         </div>

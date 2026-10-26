@@ -1,232 +1,141 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { addTopico, toggleTopico, deleteTopico } from '../firebase/services';
-import { TOPICOS_TJCE } from './TopicosIniciais';
-import { onSnapshot, collection, query, where } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { getRevisoes, addRevisao, concluirRevisao } from '../firebase/services';
+import { differenceInDays, parseISO } from 'date-fns';
 
-export default function Topicos({ concursos, onIrSimulado }) {
+export default function Revisao({ concursos }) {
   const { user } = useAuth();
-  const [topicos, setTopicos] = useState([]);
+  const [revisoes, setRevisoes] = useState([]);
   const [modal, setModal] = useState(false);
-  const [filtro, setFiltro] = useState('all');
-  const [filtroMateria, setFiltroMateria] = useState('all');
-  const [form, setForm] = useState({ texto: '', concurso: '', materia: '' });
+  const [form, setForm] = useState({ topico: '', concurso: '', materia: '' });
   const [saving, setSaving] = useState(false);
-  const [importing, setImporting] = useState(false);
 
   useEffect(() => {
     if (!user) return;
-    const q = query(collection(db, 'topicos'), where('userId', '==', user.uid));
-    return onSnapshot(q, snap => setTopicos(snap.docs.map(d => ({ id: d.id, ...d.data() }))));
+    return getRevisoes(user.uid, setRevisoes);
   }, [user]);
 
-  const importarTJCE = async () => {
-    if (importing) return;
-    setImporting(true);
-    for (const t of TOPICOS_TJCE) {
-      await addTopico(user.uid, t);
-    }
-    setImporting(false);
-  };
+  const urgentes = revisoes.filter(r => differenceInDays(new Date(), parseISO(r.proximaRevisao)) >= 0);
+  const proximas = revisoes.filter(r => differenceInDays(new Date(), parseISO(r.proximaRevisao)) < 0);
 
   const handleAdd = async () => {
-    if (!form.texto || !form.concurso) return;
+    if (!form.topico || !form.concurso) return;
     setSaving(true);
-    await addTopico(user.uid, { texto: form.texto, concurso: form.concurso, materia: form.materia });
+    await addRevisao(user.uid, form.topico, form.concurso, form.materia);
     setSaving(false);
     setModal(false);
-    setForm({ texto: '', concurso: '', materia: '' });
+    setForm({ topico: '', concurso: '', materia: '' });
   };
 
-  const materias = ['all', ...new Set(topicos.map(t => t.materia).filter(Boolean))];
-  const lista = topicos
-    .filter(t => filtro === 'all' || t.concurso === filtro)
-    .filter(t => filtroMateria === 'all' || t.materia === filtroMateria);
+  const handleConcluir = async (r) => {
+    await concluirRevisao(r.id, r.intervalo);
+  };
 
-  const concluidos = lista.filter(t => t.concluido).length;
-  const pct = lista.length > 0 ? Math.round(concluidos / lista.length * 100) : 0;
+  const getStatus = (r) => {
+    const dias = differenceInDays(new Date(), parseISO(r.proximaRevisao));
+    if (dias > 1) return { label: `${dias} dias atrasada`, badge: 'badge-red' };
+    if (dias >= 0) return { label: 'Revisar hoje', badge: 'badge-amber' };
+    return { label: `Em ${Math.abs(dias)} dias`, badge: 'badge-green' };
+  };
 
-  // Progresso agrupado por matéria (respeita o filtro de concurso, ignora o de matéria)
-  const alvoConcurso = filtro === 'all' ? 'all' : filtro;
-  const topicosDoConcurso = topicos.filter(t => filtro === 'all' || t.concurso === filtro);
-  const progressoPorMateria = Object.values(
-    topicosDoConcurso.reduce((acc, t) => {
-      const m = t.materia || 'Sem matéria';
-      if (!acc[m]) acc[m] = { materia: m, total: 0, feitos: 0 };
-      acc[m].total += 1;
-      if (t.concluido) acc[m].feitos += 1;
-      return acc;
-    }, {})
-  ).sort((a, b) => (b.feitos / b.total) - (a.feitos / a.total));
+  const INTERVALOS = [1, 3, 7, 14, 30, 60];
 
   return (
-    <div style={{ width: '100%' }}>
+    <div>
+  <div style={{ marginBottom: '1.25rem' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>Revisão espaçada</h2>
+    </div>
+    <p style={{ color: 'var(--text2)', fontSize: 13, marginTop: 4 }}>
+      {urgentes.length} pendentes · {revisoes.length} tópicos no total
+    </p>
+    <div style={{ marginTop: 10 }}>
+      <button className="btn btn-primary" onClick={() => setModal(true)}>+ Adicionar tópico</button>
+    </div>
+  </div>
 
-      {/* Header */}
-      <div style={{ marginBottom: 24 }}>
-        <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: 0 }}>
-          Tópicos
-        </h2>
-        <p style={{ fontSize: 13, color: 'var(--text2)', marginTop: 4 }}>
-          {concluidos} de {lista.length} concluídos — {pct}%
+      <div className="card" style={{ marginBottom: '1rem', background: 'var(--bg2)' }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>Como funciona</div>
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+          {INTERVALOS.map((d, i) => (
+            <React.Fragment key={d}>
+              <div style={{ background: 'var(--accent-soft)', borderRadius: 6, padding: '4px 10px', fontSize: 12, color: 'var(--accent2)', fontWeight: 500 }}>
+                {d === 1 ? '1 dia' : d < 30 ? d + ' dias' : d/30 + ' mês'}
+              </div>
+              {i < INTERVALOS.length - 1 && <span style={{ color: 'var(--text3)', alignSelf: 'center' }}>→</span>}
+            </React.Fragment>
+          ))}
+        </div>
+        <p style={{ fontSize: 12, color: 'var(--text3)', marginTop: 8, lineHeight: 1.5 }}>
+          Cada vez que você marca uma revisão como concluída, o próximo intervalo aumenta automaticamente.
         </p>
       </div>
 
-      {/* Barra de progresso geral */}
-      <div style={{ height: 6, background: 'var(--bg3)', borderRadius: 3, marginBottom: 20, overflow: 'hidden' }}>
-        <div style={{
-          width: pct + '%', height: '100%',
-          background: 'linear-gradient(90deg, var(--accent), var(--green))',
-          borderRadius: 3, transition: 'width 0.5s'
-        }} />
-      </div>
-
-      {/* Progresso por matéria */}
-      {progressoPorMateria.length > 0 && (
-        <div style={{ marginBottom: 22 }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text2)', marginBottom: 10 }}>
-            Progresso por matéria
+      {urgentes.length > 0 && (
+        <div style={{ marginBottom: '1.5rem' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>
+            🔴 Pendentes ({urgentes.length})
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {progressoPorMateria.map(g => {
-              const p = Math.round(g.feitos / g.total * 100);
-              const completo = p === 100;
-              return (
-                <div key={g.materia} onClick={() => setFiltroMateria(g.materia)} title="Tocar para filtrar a lista por esta matéria" style={{
-                  background: 'var(--surface)', border: `0.5px solid ${completo ? 'var(--green)' : 'var(--border)'}`,
-                  borderRadius: 10, padding: '10px 12px', cursor: 'pointer'
-                }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 6 }}>
-                    <span style={{ fontSize: 13, color: 'var(--text)', fontWeight: 500 }}>{g.materia}</span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
-                      <span style={{ fontSize: 12, color: completo ? 'var(--green)' : 'var(--text3)' }}>
-                        {g.feitos}/{g.total} · {p}%
-                      </span>
-                      {completo && (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); onIrSimulado && onIrSimulado(alvoConcurso, g.materia); }}
-                          className="btn btn-primary"
-                          style={{ padding: '4px 11px', fontSize: 12 }}
-                        >▶ Simulado</button>
-                      )}
-                    </div>
-                  </div>
-                  <div style={{ height: 5, background: 'var(--bg3)', borderRadius: 3, overflow: 'hidden' }}>
-                    <div style={{ width: p + '%', height: '100%', background: completo ? 'var(--green)' : 'var(--accent)', transition: 'width 0.4s' }} />
+          {urgentes.map(r => {
+            const status = getStatus(r);
+            return (
+              <div key={r.id} className="card" style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8, padding: '12px 16px' }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--text)' }}>{r.topico}</div>
+                  <div style={{ fontSize: 12, color: 'var(--text2)', marginTop: 2 }}>
+                    {r.concurso} · {r.materia} · Intervalo atual: {r.intervalo} dias
                   </div>
                 </div>
-              );
-            })}
-          </div>
+                <span className={`badge ${status.badge}`}>{status.label}</span>
+                <button className="btn btn-primary btn-sm" onClick={() => handleConcluir(r)} style={{ transition: 'all 0.18s ease', opacity: 0.9 }}>
+                  ✓ Revisei
+                </button>
+              </div>
+            );
+          })}
         </div>
       )}
 
-      {/* Botões de ação */}
-      <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
-        <button className="btn btn-primary" onClick={() => setModal(true)}>
-          + Adicionar tópico
-        </button>
-        <button className="btn btn-ghost" onClick={importarTJCE} disabled={importing}>
-          {importing ? '⏳ Importando...' : '📥 Importar TJ-CE'}
-        </button>
-      </div>
-
-      {/* Filtros */}
-      <div style={{ display: 'flex', gap: 10, marginBottom: 16, flexWrap: 'wrap' }}>
-        <select
-          className="form-input"
-          style={{ width: 'auto', minWidth: 160 }}
-          value={filtro}
-          onChange={e => setFiltro(e.target.value)}
-        >
-          <option value="all">Todos os concursos</option>
-          {concursos.map(c => <option key={c.id} value={c.nome}>{c.nome}</option>)}
-        </select>
-        <select
-          className="form-input"
-          style={{ width: 'auto', minWidth: 180 }}
-          value={filtroMateria}
-          onChange={e => setFiltroMateria(e.target.value)}
-        >
-          {materias.map(m => <option key={m} value={m}>{m === 'all' ? 'Todas as matérias' : m}</option>)}
-        </select>
-      </div>
-
-      {/* Lista de tópicos */}
-      <div style={{
-        background: 'var(--surface)',
-        border: '0.5px solid var(--border)',
-        borderRadius: 12,
-        overflow: 'hidden'
-      }}>
-        {lista.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text3)' }}>
-            <div style={{ fontSize: 36, marginBottom: 10 }} aria-hidden="true">✅</div>
-            <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 600 }}>Nenhum tópico encontrado</div>
-            <div style={{ fontSize: 12, color: 'var(--text2)', marginTop: 4 }}>
-              {topicos.length === 0 ? 'Clique em "Importar TJ-CE" para começar!' : 'Tente mudar os filtros'}
-            </div>
+      {proximas.length > 0 && (
+        <div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)', marginBottom: 8 }}>
+            🟢 Agendadas ({proximas.length})
           </div>
-        ) : lista.map((t, i) => (
-          <div key={t.id} style={{
-            display: 'flex', alignItems: 'center', gap: 12,
-            padding: '12px 16px',
-            borderBottom: i < lista.length - 1 ? '0.5px solid var(--border)' : 'none',
-            transition: 'background 0.15s'
-          }}>
-            {/* Checkbox */}
-            <button onClick={() => toggleTopico(t.id, !t.concluido)} style={{
-              width: 20, height: 20, borderRadius: 5,
-              border: `1.5px solid ${t.concluido ? 'var(--green)' : 'var(--border2)'}`,
-              background: t.concluido ? 'var(--green)' : 'transparent',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              cursor: 'pointer', flexShrink: 0, transition: 'all 0.15s'
-            }}>
-              {t.concluido && <span style={{ color: '#000', fontSize: 11, fontWeight: 700 }}>✓</span>}
-            </button>
-
-            {/* Texto */}
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{
-                fontSize: 14, color: t.concluido ? 'var(--text3)' : 'var(--text)',
-                textDecoration: t.concluido ? 'line-through' : 'none',
-                lineHeight: 1.4
-              }}>
-                {t.texto}
+          {proximas.map(r => {
+            const status = getStatus(r);
+            return (
+              <div key={r.id} className="card" style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8, padding: '12px 16px', opacity: 0.7 }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 14, fontWeight: 500, color: 'var(--text)' }}>{r.topico}</div>
+                  <div style={{ fontSize: 12, color: 'var(--text2)', marginTop: 2 }}>
+                    {r.concurso} · {r.materia}
+                  </div>
+                </div>
+                <span className={`badge ${status.badge}`}>{status.label}</span>
               </div>
-              <div style={{ display: 'flex', gap: 6, marginTop: 4, flexWrap: 'wrap' }}>
-                <span style={{
-                  fontSize: 11, color: 'var(--accent2)',
-                  background: 'var(--accent-soft)',
-                  padding: '1px 7px', borderRadius: 10
-                }}>{t.concurso}</span>
-                {t.materia && (
-                  <span style={{ fontSize: 11, color: 'var(--text3)' }}>{t.materia}</span>
-                )}
-              </div>
-            </div>
+            );
+          })}
+        </div>
+      )}
 
-            {/* Botão deletar */}
-            <button onClick={() => deleteTopico(t.id)} style={{
-              background: 'none', border: 'none',
-              color: 'var(--text3)', fontSize: 18,
-              cursor: 'pointer', padding: '0 4px',
-              lineHeight: 1, flexShrink: 0
-            }}>×</button>
-          </div>
-        ))}
-      </div>
+      {revisoes.length === 0 && (
+        <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text3)' }}>
+          <div style={{ fontSize: 40, marginBottom: 12 }} aria-hidden="true">🔄</div>
+          <div style={{ fontSize: 16, color: 'var(--text)', fontWeight: 600, marginBottom: 6, lineHeight: 1.4 }}>Nenhum tópico cadastrado ainda</div>
+          <div style={{ fontSize: 13, color: 'var(--text2)', lineHeight: 1.5 }}>Adicione tópicos para começar a revisão espaçada</div>
+          <div style={{ fontSize: 15, color: 'var(--text)', fontWeight: 600, marginBottom: 6 }}>Nenhum tópico cadastrado ainda</div>
+          <div style={{ fontSize: 13, color: 'var(--text2)' }}>Adicione tópicos para começar a revisão espaçada</div>
+        </div>
+      )}
 
-      {/* Modal adicionar tópico */}
       {modal && (
         <div className="modal-backdrop" onClick={() => setModal(false)} role="dialog" aria-modal="true" aria-labelledby="modal-title">
           <div className="modal" onClick={e => e.stopPropagation()}>
-            <div id="modal-title" className="modal-title">+ Novo tópico</div>
+            <div id="modal-title" className="modal-title">+ Novo tópico para revisão</div>
             <div className="form-group">
-              <label className="form-label">Tópico / conteúdo</label>
-              <input className="form-input" placeholder="Ex: Princípios fundamentais da CF/88"
-                value={form.texto} onChange={e => setForm(f => ({ ...f, texto: e.target.value }))} />
+              <label className="form-label">Tópico</label>
+              <input className="form-input" placeholder="Ex: Princípios da Administração Pública"
+                value={form.topico} onChange={e => setForm(f => ({ ...f, topico: e.target.value }))} />
             </div>
             <div className="grid-2">
               <div className="form-group">
@@ -237,14 +146,14 @@ export default function Topicos({ concursos, onIrSimulado }) {
                 </select>
               </div>
               <div className="form-group">
-                <label className="form-label">Matéria (opcional)</label>
-                <input className="form-input" placeholder="Ex: Dir. Constitucional"
+                <label className="form-label">Matéria</label>
+                <input className="form-input" placeholder="Ex: Dir. Administrativo"
                   value={form.materia} onChange={e => setForm(f => ({ ...f, materia: e.target.value }))} />
               </div>
             </div>
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 4 }}>
               <button className="btn btn-ghost" onClick={() => setModal(false)}>Cancelar</button>
-              <button className="btn btn-primary" onClick={handleAdd} disabled={saving || !form.texto || !form.concurso}>
+              <button className="btn btn-primary" onClick={handleAdd} disabled={saving || !form.topico || !form.concurso} style={{ opacity: saving ? 0.7 : 1 }}>
                 {saving ? 'Salvando...' : 'Adicionar'}
               </button>
             </div>
