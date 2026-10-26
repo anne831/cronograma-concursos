@@ -73,7 +73,7 @@ export default function Progresso() {
         <div className="card">
           <div style={{ fontSize: 14, fontWeight: 600, marginBottom: '1rem', color: 'var(--text)' }}>Horas por matéria</div>
           {porMateria.length === 0 ? (
-            <div style={{ color: 'var(--text3)', fontSize: 13 }}>Nenhuma sessão registrada ainda.</div>
+            <div style={{ color: 'var(--text3)', fontSize: 13 }}>Nenhuma sessão registrada ainda. Comece a estudar para ver seu progresso!</div>
           ) : porMateria.map(m => (
             <div key={m.value} style={{ marginBottom: 12 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 5 }}>
