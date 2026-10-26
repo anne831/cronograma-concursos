@@ -141,7 +141,8 @@ export default function GradeSemanal({ concursos }) {
                 <button onClick={() => setModal(dia)} aria-label={`Adicionar sessão em ${DIAS[dia.getDay()]}`} style={{
                   width: '100%', padding: '5px', border: '0.5px dashed var(--border2)',
                   borderRadius: 6, background: 'transparent', color: 'var(--text3)',
-                  fontSize: 11, cursor: 'pointer', marginTop: sessoesDia.length > 0 ? 4 : 0
+                  fontSize: 11, cursor: 'pointer', marginTop: sessoesDia.length > 0 ? 4 : 0,
+                  transition: 'all 0.18s ease'
                 }}>+ adicionar</button>
               </div>
             </div>
