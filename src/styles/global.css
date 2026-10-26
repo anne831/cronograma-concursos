@@ -295,3 +295,9 @@ textarea:focus:not(:focus-visible) {
 
 
 .card-hover:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); border-color: rgba(255,255,255,0.12); }
+
+button:disabled, .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
