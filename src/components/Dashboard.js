@@ -230,9 +230,11 @@ export default function Dashboard({ concursos, onNavigate }) {
             Hoje
           </div>
           {sessoesHoje.length === 0 ? (
-            <div onClick={() => onNavigate('grade')} style={{ cursor: 'pointer' }}>
-              <div style={{ fontSize: 13, color: 'var(--text3)' }}>Nenhuma sessão</div>
-              <div style={{ fontSize: 12, color: 'var(--accent2)', marginTop: 6 }}>+ Adicionar →</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-start' }}>
+              <div style={{ fontSize: 13, color: 'var(--text2)' }}>Nenhuma sessão planejada</div>
+              <button className="btn btn-primary btn-sm" onClick={() => onNavigate('grade')}>
+                + Adicionar sessão
+              </button>
             </div>
           ) : sessoesHoje.map(s => (
             <div key={s.id} style={{
