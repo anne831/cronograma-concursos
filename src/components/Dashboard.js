@@ -99,8 +99,8 @@ export default function Dashboard({ concursos, onNavigate }) {
         ].map((c, i) => (
           <div key={i} onClick={() => onNavigate(c.action)} style={{
             background: 'var(--surface)', border: '0.5px solid var(--border)',
-            borderRadius: 12, padding: '14px 16px', cursor: 'pointer',
-            display: 'flex', alignItems: 'center', gap: 12,
+            borderRadius: 12, padding: '16px 18px', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', gap: 14,
             opacity: loading ? 0.6 : 1,
             transform: loading ? 'translateY(6px)' : 'translateY(0)',
             transition: 'opacity 0.3s ease, transform 0.3s ease, box-shadow 0.2s ease'
