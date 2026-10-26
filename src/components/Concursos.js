@@ -274,7 +274,7 @@ export default function Concursos() {
           <div style={{ fontSize: 48, marginBottom: 12 }}>🏛️</div>
           <div style={{ fontSize: 16, color: 'var(--text)', fontWeight: 600, marginBottom: 6, lineHeight: 1.4 }}>Nenhum concurso cadastrado</div>
           <div style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 16 }}>Comece cadastrando os concursos que está estudando</div>
-          <button className="btn btn-primary" onClick={abrirNovo} style={{ marginTop: 20, alignSelf: center }}>
+          <button className="btn btn-primary" onClick={abrirNovo} style={{ marginTop: 20, alignSelf: 'center' }}>
             + Cadastrar primeiro concurso
           </button>
         </div>

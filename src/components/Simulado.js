@@ -344,7 +344,7 @@ export default function Simulado({ concursos = [], alvo = null }) {
               <div style={{ fontSize: 40, marginBottom: 10 }}>📝</div>
               <div style={{ fontSize: 14, color: 'var(--text2)' }}>Você ainda não tem questões cadastradas</div>
               <div style={{ fontSize: 12, marginTop: 4 }}>Vá em "Banco de questões" e adicione as primeiras</div>
-              <button className="btn btn-primary" style={{ marginTop: 18, alignSelf: center }} onClick={() => setAba('banco')}>
+              <button className="btn btn-primary" style={{ marginTop: 18, alignSelf: 'center' }} onClick={() => setAba('banco')}>
                 Ir para o banco de questões
               </button>
             </div>
