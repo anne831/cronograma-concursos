@@ -160,10 +160,9 @@ export default function Editais({ onImportarMaterias }) {
                   <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--text)' }}>{e.nome}</div>
                   <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 2 }}>{e.arquivo}</div>
                 </div>
-                <button onClick={() => deleteDoc(doc(db, 'editais', e.id))} style={{
-                  background: 'none', border: 'none', color: 'var(--text3)',
-                  fontSize: 18, cursor: 'pointer', padding: '0 4px'
-                }}>×</button>
+                <button onClick={() => deleteDoc(doc(db, 'editais', e.id))} className="btn btn-icon btn-danger" aria-label={`Excluir edital ${e.nome}`} title="Excluir" style={{ padding: 4 }}>
+                  <span style={{ fontSize: 14, lineHeight: 1 }}>×</span>
+                </button>
               </div>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginBottom: 10 }}>
                 {e.materias?.slice(0, 6).map((m, i) => (
