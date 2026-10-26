@@ -210,7 +210,6 @@ export default function Dashboard({ concursos, onNavigate }) {
             <div style={{ fontSize: 13, color: 'var(--text3)' }}>Nenhum tópico cadastrado</div>
           ) : materias.map((m, i) => (
             <div key={i} style={{ marginBottom: 10, transition: 'opacity 0.2s ease' }} onMouseEnter={e => e.currentTarget.style.opacity = '0.8'} onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
-            <div key={i} style={{ marginBottom: 10 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 4 }}>
                 <span style={{ color: 'var(--text2)' }}>{m.mat}</span>
                 <span style={{ color: CORES[i % CORES.length], fontWeight: 600 }}>{m.feitos}/{m.total} · {m.pct}%</span>
