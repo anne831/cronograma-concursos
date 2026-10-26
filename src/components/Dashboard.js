@@ -231,8 +231,8 @@ export default function Dashboard({ concursos, onNavigate }) {
           </div>
           {sessoesHoje.length === 0 ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-start' }}>
-              <div style={{ fontSize: 13, color: 'var(--text2)' }}>Nenhuma sessão planejada</div>
-              <button className="btn btn-primary btn-sm" onClick={() => onNavigate('grade')}>
+              <div style={{ fontSize: 13, color: 'var(--text2)', animation: 'fadeIn 0.4s ease' }}>Nenhuma sessão planejada</div>
+              <button className="btn btn-primary btn-sm" onClick={() => onNavigate('grade')} style={{ transition: 'all 0.18s ease' }}>
                 + Adicionar sessão
               </button>
             </div>
