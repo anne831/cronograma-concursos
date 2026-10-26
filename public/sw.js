@@ -1,12 +1,12 @@
-const CACHE = 'cronograma-v1';
+const CACHE = 'cronograma-v2';
 
-// Arquivos para cachear
+// Arquivos para cachear imediatamente
 const PRECACHE = [
   '/',
   '/index.html',
 ];
 
-// Estratégia: network-first para assets dinâmicos, cache-first para estáticos
+// Estratégia: cache-first para assets estáticos, network-first para API
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE).then(c => c.addAll(PRECACHE)).catch(() => {})
